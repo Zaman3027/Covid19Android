@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -28,12 +29,19 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import com.mahafuz.covid19tracker.Model.Cases_time_series;
+import com.mahafuz.covid19tracker.Model.DailyStateModel;
 import com.mahafuz.covid19tracker.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    List<Cases_time_series> list;
+
+    public HomeFragment(List<Cases_time_series> list) {
+        this.list = list;
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -42,6 +50,7 @@ public class HomeFragment extends Fragment {
     CardView homeCardActive, homeCardRecovered, homeDeadActive;
     int screenWidth;
     AnyChartView anyChartView;
+    TextView cardActive, cardRecovered, cardDeceased;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +66,14 @@ public class HomeFragment extends Fragment {
         homeCardRecovered = getView().findViewById(R.id.homeCardRecovered);
         homeDeadActive = getView().findViewById(R.id.homeDeadActive);
         anyChartView = getView().findViewById(R.id.any_chart_view);
+        cardActive = getView().findViewById(R.id.cardActive);
+        cardRecovered = getView().findViewById(R.id.cardRecovered);
+        cardDeceased = getView().findViewById(R.id.cardDeceased);
+
+        cardDeceased.setText(list.get(list.size() - 1).getTotaldeceased());
+        cardRecovered.setText(list.get(list.size() - 1).getTotalrecovered());
+        cardActive.setText(list.get(list.size() - 1).getTotalconfirmed());
+
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
         cartesian.crosshair().enabled(true);
@@ -65,37 +82,19 @@ public class HomeFragment extends Fragment {
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Trend of Sales of the Most Popular Products of ACME Corp.");
+        cartesian.title("Daily Cases");
 
-        cartesian.yAxis(0).title("Number of Bottles Sold (thousands)");
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
 
         List<DataEntry> seriesData = new ArrayList<>();
-        seriesData.add(new CustomDataEntry("1986", 3.6, 2.3, 2.8));
-        seriesData.add(new CustomDataEntry("1987", 7.1, 4.0, 4.1));
-        seriesData.add(new CustomDataEntry("1988", 8.5, 6.2, 5.1));
-        seriesData.add(new CustomDataEntry("1989", 9.2, 11.8, 6.5));
-        seriesData.add(new CustomDataEntry("1990", 10.1, 13.0, 12.5));
-        seriesData.add(new CustomDataEntry("1991", 11.6, 13.9, 18.0));
-        seriesData.add(new CustomDataEntry("1992", 16.4, 18.0, 21.0));
-        seriesData.add(new CustomDataEntry("1993", 18.0, 23.3, 20.3));
-        seriesData.add(new CustomDataEntry("1994", 13.2, 24.7, 19.2));
-        seriesData.add(new CustomDataEntry("1995", 12.0, 18.0, 14.4));
-        seriesData.add(new CustomDataEntry("1996", 3.2, 15.1, 9.2));
-        seriesData.add(new CustomDataEntry("1997", 4.1, 11.3, 5.9));
-        seriesData.add(new CustomDataEntry("1998", 6.3, 14.2, 5.2));
-        seriesData.add(new CustomDataEntry("1999", 9.4, 13.7, 4.7));
-        seriesData.add(new CustomDataEntry("2000", 11.5, 9.9, 4.2));
-        seriesData.add(new CustomDataEntry("2001", 13.5, 12.1, 1.2));
-        seriesData.add(new CustomDataEntry("2002", 14.8, 13.5, 5.4));
-        seriesData.add(new CustomDataEntry("2003", 16.6, 15.1, 6.3));
-        seriesData.add(new CustomDataEntry("2004", 18.1, 17.9, 8.9));
-        seriesData.add(new CustomDataEntry("2005", 17.0, 18.9, 10.1));
-        seriesData.add(new CustomDataEntry("2006", 16.6, 20.3, 11.5));
-        seriesData.add(new CustomDataEntry("2007", 14.1, 20.7, 12.2));
-        seriesData.add(new CustomDataEntry("2008", 15.7, 21.6, 10));
-        seriesData.add(new CustomDataEntry("2009", 12.0, 22.5, 8.9));
+        for (Cases_time_series cases_time_series : list) {
+            seriesData.add(new CustomDataEntry(cases_time_series.getDate(),
+                    Integer.parseInt(cases_time_series.getDailyconfirmed()),
+                    Integer.parseInt(cases_time_series.getDailyrecovered()),
+                    Integer.parseInt(cases_time_series.getDailydeceased())
+            ));
+        }
 
 
         Set set = Set.instantiate();
@@ -104,8 +103,8 @@ public class HomeFragment extends Fragment {
         Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
         Mapping series3Mapping = set.mapAs("{ x: 'x', value: 'value3' }");
 
-        Line series1 = cartesian.line(seriesData);
-        series1.name("Brandy");
+        Line series1 = cartesian.line(series1Mapping);
+        series1.name("Confirmed");
         series1.hovered().markers().enabled(true);
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)
@@ -116,30 +115,30 @@ public class HomeFragment extends Fragment {
                 .offsetX(5d)
                 .offsetY(5d);
 
-//        Line series2 = cartesian.line(series2Mapping);
-//        series2.name("Whiskey");
-//        series2.hovered().markers().enabled(true);
-//        series2.hovered().markers()
-//                .type(MarkerType.CIRCLE)
-//                .size(4d);
-//        series2.tooltip()
-//                .position("right")
-//                .anchor(Anchor.LEFT_CENTER)
-//                .offsetX(5d)
-//                .offsetY(5d);
-//
-//        Line series3 = cartesian.line(series3Mapping);
-//        series3.name("Tequila");
-//        series3.hovered().markers().enabled(true);
-//        series3.hovered().markers()
-//                .type(MarkerType.CIRCLE)
-//                .size(4d);
-//        series3.tooltip()
-//                .position("right")
-//                .anchor(Anchor.LEFT_CENTER)
-//                .offsetX(5d)
-//                .offsetY(5d);
-//
+        Line series2 = cartesian.line(series2Mapping);
+        series2.name("Recovered");
+        series2.hovered().markers().enabled(true);
+        series2.hovered().markers()
+                .type(MarkerType.CIRCLE)
+                .size(4d);
+        series2.tooltip()
+                .position("right")
+                .anchor(Anchor.LEFT_CENTER)
+                .offsetX(5d)
+                .offsetY(5d);
+
+        Line series3 = cartesian.line(series3Mapping);
+        series3.name("Deceased");
+        series3.hovered().markers().enabled(true);
+        series3.hovered().markers()
+                .type(MarkerType.CIRCLE)
+                .size(4d);
+        series3.tooltip()
+                .position("right")
+                .anchor(Anchor.LEFT_CENTER)
+                .offsetX(5d)
+                .offsetY(5d);
+
         cartesian.legend().enabled(true);
         cartesian.legend().fontSize(13d);
         cartesian.legend().padding(0d, 0d, 10d, 0d);
