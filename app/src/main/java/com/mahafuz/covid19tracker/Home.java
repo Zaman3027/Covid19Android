@@ -1,6 +1,8 @@
 package com.mahafuz.covid19tracker;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -19,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Home extends BaseAct {
+
     List<Cases_time_series> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +34,6 @@ public class Home extends BaseAct {
                 .addToBackStack("Home")
                 .commit();
     }
-
 
     @Override
     public void onBackPressed() {
