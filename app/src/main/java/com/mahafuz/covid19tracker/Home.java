@@ -6,7 +6,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.mahafuz.covid19tracker.ApiInterface.FetchData;
 import com.mahafuz.covid19tracker.ApiInterface.GetJSONString;
+import com.mahafuz.covid19tracker.Fragment.AllIndiaFragment;
 import com.mahafuz.covid19tracker.Fragment.HomeFragment;
+import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.Cases_time_series;
 
 import org.json.JSONArray;
@@ -23,31 +25,20 @@ public class Home extends BaseAct {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        showDialog("Pelase Wait", "Loading Data");
-
-        FetchData fetchData = new FetchData(new GetJSONString() {
-            @Override
-            public void getData(String data) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(data);
-                    JSONArray jsonArray = jsonObject.getJSONArray("cases_time_series");
-                    Gson gson = new Gson();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        Log.i("DATA", gson.fromJson(jsonArray.getString(i), Cases_time_series.class).getDate());
-                        list.add(gson.fromJson(jsonArray.getString(i), Cases_time_series.class));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                dismissDialog();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.navigation_drawer_frame, new HomeFragment(list))
-                        .commit();
-            }
-        });
-        fetchData.execute();
-
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.navigation_drawer_frame, new HomeFragment(), "Home")
+                .addToBackStack("Home")
+                .commit();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.i("COUNT OF STack", "" + getSupportFragmentManager().getBackStackEntryCount());
+        if (getSupportFragmentManager().getBackStackEntryCount() > 2) {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
 }

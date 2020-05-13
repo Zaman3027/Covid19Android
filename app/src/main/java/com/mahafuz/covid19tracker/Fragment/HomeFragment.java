@@ -1,5 +1,6 @@
 package com.mahafuz.covid19tracker.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -29,19 +30,25 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import com.google.gson.Gson;
+import com.mahafuz.covid19tracker.ApiInterface.FetchData;
+import com.mahafuz.covid19tracker.ApiInterface.GetJSONString;
+import com.mahafuz.covid19tracker.BaseAct;
+import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.Cases_time_series;
 import com.mahafuz.covid19tracker.Model.DailyStateModel;
+import com.mahafuz.covid19tracker.Model.SateWiseModel;
 import com.mahafuz.covid19tracker.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
     List<Cases_time_series> list;
-
-    public HomeFragment(List<Cases_time_series> list) {
-        this.list = list;
-    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -51,6 +58,10 @@ public class HomeFragment extends Fragment {
     int screenWidth;
     AnyChartView anyChartView;
     TextView cardActive, cardRecovered, cardDeceased;
+    CardView cardAllIndia;
+    FragmentCall fragmentCall;
+    ProgressDialog progressDialog;
+    List<SateWiseModel> sateWiseModelList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +73,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = new ProgressDialog(getContext());
         homeCardActive = getView().findViewById(R.id.homeCardActive);
         homeCardRecovered = getView().findViewById(R.id.homeCardRecovered);
         homeDeadActive = getView().findViewById(R.id.homeDeadActive);
@@ -69,11 +81,60 @@ public class HomeFragment extends Fragment {
         cardActive = getView().findViewById(R.id.cardActive);
         cardRecovered = getView().findViewById(R.id.cardRecovered);
         cardDeceased = getView().findViewById(R.id.cardDeceased);
+        cardAllIndia = getView().findViewById(R.id.cardAllIndia);
+        progressDialog.setMessage("Please Wait");
+        progressDialog.setTitle("Loading");
+        progressDialog.show();
+        list = new ArrayList<>();
+        sateWiseModelList = new ArrayList<>();
 
-        cardDeceased.setText(list.get(list.size() - 1).getTotaldeceased());
-        cardRecovered.setText(list.get(list.size() - 1).getTotalrecovered());
-        cardActive.setText(list.get(list.size() - 1).getTotalconfirmed());
+        FetchData fetchData = new FetchData(new GetJSONString() {
+            @Override
+            public void getData(String data) {
 
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    JSONArray jsonArray = jsonObject.getJSONArray("cases_time_series");
+                    JSONArray stateWiseJsonArray = jsonObject.getJSONArray("statewise");
+                    Gson gson = new Gson();
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        list.add(gson.fromJson(jsonArray.getString(i), Cases_time_series.class));
+                    }
+
+                    for (int i = 0; i < stateWiseJsonArray.length(); i++) {
+                        sateWiseModelList.add(gson.fromJson(stateWiseJsonArray.getString(i), SateWiseModel.class));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (list.size() > 0) {
+                    cardDeceased.setText(list.get(list.size() - 1).getTotaldeceased());
+                    cardRecovered.setText(list.get(list.size() - 1).getTotalrecovered());
+                    cardActive.setText(list.get(list.size() - 1).getTotalconfirmed());
+                    plotChart();
+                    progressDialog.dismiss();
+                }
+
+            }
+        });
+        fetchData.execute();
+
+
+        cardAllIndia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.navigation_drawer_frame, new AllIndiaFragment(), "All India")
+                        .addToBackStack("All India")
+                        .commit();
+            }
+        });
+
+    }
+
+    private void plotChart() {
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
         cartesian.crosshair().enabled(true);
