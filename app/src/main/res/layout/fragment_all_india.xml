@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.anychart.AnyChartView
+        <FrameLayout
             android:layout_alignParentTop="true"
-            android:id="@+id/any_chart_view_India"
+            android:id="@+id/allIndiaFrame"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="0dp"
@@ -20,7 +20,7 @@
 
         <RelativeLayout
             android:id="@+id/detailsAllIndia"
-            android:layout_below="@+id/any_chart_view_India"
+            android:layout_below="@+id/allIndiaFrame"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
