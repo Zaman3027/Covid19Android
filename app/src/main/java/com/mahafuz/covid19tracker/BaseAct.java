@@ -25,7 +25,7 @@ public class BaseAct extends AppCompatActivity {
         actionBar.setElevation(0);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_toolbar, null));
-
+        getSupportActionBar().hide();
     }
 
     void hideActionBar(){

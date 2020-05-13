@@ -76,6 +76,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         progressDialog = new ProgressDialog(getContext());
         homeCardActive = getView().findViewById(R.id.homeCardActive);
         homeCardRecovered = getView().findViewById(R.id.homeCardRecovered);

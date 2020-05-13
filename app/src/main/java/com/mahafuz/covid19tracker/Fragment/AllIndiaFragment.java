@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,6 +82,7 @@ public class AllIndiaFragment extends Fragment implements FragmentCall, GetState
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         all_india_recycler_view = getView().findViewById(R.id.all_india_recycler_view);
+
         all_india_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
         allIndiaFrame = getView().findViewById(R.id.allIndiaFrame);
         detailsAllIndia = getView().findViewById(R.id.detailsAllIndia);
@@ -91,7 +93,6 @@ public class AllIndiaFragment extends Fragment implements FragmentCall, GetState
         allIndiaConfirm = getView().findViewById(R.id.allIndiaConfirm);
         allIndiaSate = getView().findViewById(R.id.allIndiaSate);
         stateWiseModelNewList = new ArrayList<>();
-
 
         progressDialog.setTitle("Please Wait");
         progressDialog.setMessage("Loading Data");
