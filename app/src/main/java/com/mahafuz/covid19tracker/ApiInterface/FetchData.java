@@ -11,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+////// This is comment
+
 public class FetchData extends AsyncTask<Void, Void, Void> {
     String data = "";
     GetJSONString getJSONString;
