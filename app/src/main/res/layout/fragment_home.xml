@@ -1,135 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
     tools:context=".Fragment.HomeFragment">
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="20dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/homeCardActive"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="5dp"
-            android:elevation="10dp"
-            android:padding="8dp"
-            android:layout_marginTop="8dp">
+        <LinearLayout
+            android:id="@+id/topCardsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:id="@+id/homeCardActive"
+                android:layout_weight="1"
+                android:layout_height="130dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="10dp"
+                android:padding="8dp"
+                android:layout_margin="3dp"
+                android:layout_marginTop="8dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Confirm"
-                    android:textAlignment="center"
-                    android:layout_alignParentTop="true"
-                    android:textColor="#d81b60"
-                    android:layout_marginTop="8dp"
-                    android:textSize="16dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_active">
 
-                <TextView
-                    android:id="@+id/cardActive"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:textAlignment="center"
+                        android:text="Confirm"
+                        android:textColor="#2B59A2"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="16dp" />
+
+                    <ImageView
+                        android:src="@drawable/icon_infected"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="20dp"
+                        android:maxHeight="20dp"
+                        android:layout_gravity="center">
+                    </ImageView>
+
+                    <TextView
+                        android:id="@+id/cardActive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp"
+                        android:text="555"
+                        android:textAlignment="center"
+                        android:textColor="#2B59A2"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/anonymous_pro"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/homeCardRecovered"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="130dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="10dp"
+                android:padding="8dp"
+                android:layout_margin="3dp"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="555"
-                    android:textAlignment="center"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="8dp"
-                    android:textSize="16dp" />
-            </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_cured">
 
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:textAlignment="center"
+                        android:text="Cured"
+                        android:textColor="#015b25"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="16dp" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/homeCardRecovered"
-            android:layout_centerHorizontal="true"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="5dp"
-            android:elevation="10dp"
-            android:padding="8dp"
-            android:layout_marginTop="8dp">
+                    <ImageView
+                        android:src="@drawable/icon_inactive"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="20dp"
+                        android:maxHeight="20dp"
+                        android:layout_gravity="center">
+                    </ImageView>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/cardRecovered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp"
+                        android:text="555"
+                        android:textAlignment="center"
+                        android:textColor="#015b25"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/anonymous_pro" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                <TextView
+            <androidx.cardview.widget.CardView
+                android:id="@+id/homeDeadActive"
+                android:layout_alignParentRight="true"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="130dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="10dp"
+                android:padding="8dp"
+                android:layout_margin="3dp"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Recovered"
-                    android:textAlignment="center"
-                    android:layout_alignParentTop="true"
-                    android:textColor="#7cb342"
-                    android:layout_marginTop="8dp"
-                    android:textSize="16dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient_deceased">
 
-                <TextView
-                    android:id="@+id/cardRecovered"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="555"
-                    android:textAlignment="center"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="8dp"
-                    android:textSize="16dp" />
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="5dp"
+                        android:textAlignment="center"
+                        android:text="Deceased"
+                        android:textColor="#5a0502"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="16dp" />
 
-        </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:src="@drawable/icon_death"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:adjustViewBounds="true"
+                        android:maxWidth="20dp"
+                        android:maxHeight="20dp"
+                        android:layout_gravity="center">
+                    </ImageView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_alignParentRight="true"
-            android:id="@+id/homeDeadActive"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="5dp"
-            android:elevation="10dp"
-            android:padding="8dp"
-            android:layout_marginTop="8dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Deceased"
-                    android:textAlignment="center"
-                    android:layout_alignParentTop="true"
-                    android:textColor="#757575"
-                    android:layout_marginTop="8dp"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/cardDeceased"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="555"
-                    android:textAlignment="center"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="8dp"
-                    android:textSize="16dp" />
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/cardDeceased"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="5dp"
+                        android:text="555"
+                        android:textAlignment="center"
+                        android:textColor="#5a0502"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/anonymous_pro" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <com.anychart.AnyChartView
-            android:layout_below="@+id/homeCardActive"
             android:id="@+id/any_chart_view"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:layout_below="@+id/homeCardActive"
             android:layout_marginTop="16dp" />
 
         <LinearLayout
@@ -141,10 +200,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAllIndia"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/any_chart_view"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
-            app:cardCornerRadius="10dp">
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="#717171">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -155,18 +214,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="All India State"
+                    android:text="INDIAN STATES"
                     android:textAlignment="textStart"
                     android:layout_marginLeft="16dp"
                     android:textSize="20sp"
                     android:layout_alignParentLeft="true"
-                    android:textColor="#929292" />
+                    android:fontFamily="@font/montserrat"
+                    android:textStyle="normal"
+                    android:textColor="#ffffff" />
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </RelativeLayout>
 
@@ -175,10 +236,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDemographic"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/cardAllIndia"
-            app:cardCornerRadius="10dp"
-            android:layout_marginTop="8dp">
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="#717171">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -189,18 +250,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="DemoGraphic"
+                    android:text="DEMOGRAHICS"
                     android:textAlignment="textStart"
                     android:layout_marginLeft="16dp"
                     android:textSize="20sp"
                     android:layout_alignParentLeft="true"
-                    android:textColor="#929292" />
+                    android:fontFamily="@font/montserrat"
+                    android:textStyle="normal"
+                    android:textColor="#ffffff" />
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCovidAwareness"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="#717171">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="COVID AWARENESS"
+                    android:textAlignment="textStart"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="20sp"
+                    android:layout_alignParentLeft="true"
+                    android:fontFamily="@font/montserrat"
+                    android:textStyle="normal"
+                    android:textColor="#ffffff" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </RelativeLayout>
 
@@ -209,10 +307,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAbout"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/cardDemographic"
-            app:cardCornerRadius="10dp"
-            android:layout_marginTop="8dp">
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="#717171">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -223,22 +321,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="About Us"
+                    android:text="ABOUT US"
                     android:textAlignment="textStart"
                     android:layout_marginLeft="16dp"
                     android:textSize="20sp"
                     android:layout_alignParentLeft="true"
-                    android:textColor="#929292" />
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="#ffffff" />
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"
+
                     android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
-    </RelativeLayout>
-</FrameLayout>
+    </LinearLayout>
+</ScrollView>
