@@ -82,7 +82,7 @@ public class AllIndiaFragment extends Fragment implements FragmentCall, GetState
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         all_india_recycler_view = getView().findViewById(R.id.all_india_recycler_view);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         all_india_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
         allIndiaFrame = getView().findViewById(R.id.allIndiaFrame);
         detailsAllIndia = getView().findViewById(R.id.detailsAllIndia);
