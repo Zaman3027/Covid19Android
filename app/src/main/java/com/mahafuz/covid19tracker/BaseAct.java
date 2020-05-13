@@ -26,7 +26,7 @@ public class BaseAct extends AppCompatActivity {
         getSupportActionBar().setCustomView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_toolbar, null));
     }
 
-    void showDialog(String title, String message) {
+    public void showDialog(String title, String message) {
         progressDialog.setTitle(title);
         progressDialog.setMessage(message);
         progressDialog.show();

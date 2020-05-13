@@ -39,7 +39,7 @@ public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdap
         parentList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentCall.indiaFragmentCall(position);
+                fragmentCall.indiaFragmentCall(position, sateWiseModelList.get(position).getStatecode());
             }
         });
     }

@@ -1,11 +1,13 @@
 package com.mahafuz.covid19tracker.Fragment;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +36,7 @@ import com.google.gson.Gson;
 import com.mahafuz.covid19tracker.ApiInterface.FetchData;
 import com.mahafuz.covid19tracker.ApiInterface.GetJSONString;
 import com.mahafuz.covid19tracker.BaseAct;
+import com.mahafuz.covid19tracker.Home;
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.Cases_time_series;
 import com.mahafuz.covid19tracker.Model.DailyStateModel;
@@ -82,9 +85,6 @@ public class HomeFragment extends Fragment {
         cardRecovered = getView().findViewById(R.id.cardRecovered);
         cardDeceased = getView().findViewById(R.id.cardDeceased);
         cardAllIndia = getView().findViewById(R.id.cardAllIndia);
-        progressDialog.setMessage("Please Wait");
-        progressDialog.setTitle("Loading");
-        progressDialog.show();
         list = new ArrayList<>();
         sateWiseModelList = new ArrayList<>();
 
