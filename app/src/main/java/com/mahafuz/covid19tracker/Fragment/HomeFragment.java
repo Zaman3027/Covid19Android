@@ -87,6 +87,9 @@ public class HomeFragment extends Fragment {
         cardAllIndia = getView().findViewById(R.id.cardAllIndia);
         list = new ArrayList<>();
         sateWiseModelList = new ArrayList<>();
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please Wait");
+        progressDialog.show();
 
         FetchData fetchData = new FetchData(new GetJSONString() {
             @Override
@@ -207,7 +210,7 @@ public class HomeFragment extends Fragment {
         anyChartView.setChart(cartesian);
     }
 
-    class CustomDataEntry extends ValueDataEntry {
+    static class CustomDataEntry extends ValueDataEntry {
 
         CustomDataEntry(String x, Number value, Number value2, Number value3) {
             super(x, value);

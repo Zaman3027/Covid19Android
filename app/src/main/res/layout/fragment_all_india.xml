@@ -20,7 +20,7 @@
 
         <RelativeLayout
             android:id="@+id/detailsAllIndia"
-            android:layout_below="@+id/any_chart_view"
+            android:layout_below="@+id/any_chart_view_India"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"

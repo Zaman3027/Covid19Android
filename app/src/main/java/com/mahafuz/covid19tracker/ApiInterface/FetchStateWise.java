@@ -45,7 +45,13 @@ public class FetchStateWise extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.i("AllINDIA", data);
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            JSONArray jsonArray = jsonObject.getJSONArray("states_daily");
+            stateJSON.getData(jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }
