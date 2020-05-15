@@ -43,6 +43,7 @@ import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.Cases_time_series;
 import com.mahafuz.covid19tracker.Model.SateWiseModel;
 import com.mahafuz.covid19tracker.Model.StateWiseModelNew;
+import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
 
 import org.json.JSONArray;
@@ -70,6 +71,7 @@ public class AllIndiaFragment extends Fragment implements FragmentCall, GetState
     JSONArray stateWiseData;
     List<StateWiseModelNew> stateWiseModelNewList;
     FrameLayout allIndiaFrame;
+    AndroidModule androidModule;
 
 
     @Override
@@ -93,10 +95,12 @@ public class AllIndiaFragment extends Fragment implements FragmentCall, GetState
         allIndiaConfirm = getView().findViewById(R.id.allIndiaConfirm);
         allIndiaSate = getView().findViewById(R.id.allIndiaSate);
         stateWiseModelNewList = new ArrayList<>();
+        androidModule = AndroidModule.getInstance(getContext());
 
-        progressDialog.setTitle("Please Wait");
-        progressDialog.setMessage("Loading Data");
-        progressDialog.show();
+//        progressDialog.setTitle("Please Wait");
+//        progressDialog.setMessage("Loading Data");
+//        progressDialog.show();
+        androidModule.showLoadingDialogue();
         FetchData fetchData = new FetchData(new GetJSONString() {
             @Override
             public void getData(String data) {
@@ -159,9 +163,12 @@ public class AllIndiaFragment extends Fragment implements FragmentCall, GetState
     public void getData(JSONArray data) {
         this.stateWiseData = data;
         all_india_recycler_view.setAdapter(new AllIndiaStateAdapter(AllIndiaFragment.this::indiaFragmentCall, sateWiseModelList));
-        progressDialog.dismiss();
+        androidModule.dismissDialogue();
     }
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        androidModule.dispose();
+    }
 }

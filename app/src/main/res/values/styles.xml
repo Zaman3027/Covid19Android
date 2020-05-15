@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/primaryDarkColor</item>
     </style>
 
+    <style name="customDialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:width">100dp</item>
+        <item name="android:height">100dp</item>
+    </style>
+
 </resources>

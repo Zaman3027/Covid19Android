@@ -9,11 +9,10 @@
     tools:context=".SplashScreen">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/animation"
         app:lottie_loop="true"
         app:lottie_fileName="splash_screen_animation.json"
-        app:lottie_autoPlay="true"
-        ></com.airbnb.lottie.LottieAnimationView>
+        app:lottie_autoPlay="true" />
 </LinearLayout>

@@ -41,6 +41,7 @@ import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.Cases_time_series;
 import com.mahafuz.covid19tracker.Model.DailyStateModel;
 import com.mahafuz.covid19tracker.Model.SateWiseModel;
+import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
 
 import org.json.JSONArray;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment {
     FragmentCall fragmentCall;
     ProgressDialog progressDialog;
     List<SateWiseModel> sateWiseModelList;
+    AndroidModule androidModule;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,9 +90,11 @@ public class HomeFragment extends Fragment {
         cardAllIndia = getView().findViewById(R.id.cardAllIndia);
         list = new ArrayList<>();
         sateWiseModelList = new ArrayList<>();
-        progressDialog.setTitle("Loading");
-        progressDialog.setMessage("Please Wait");
-        progressDialog.show();
+//        progressDialog.setTitle("Loading");
+//        progressDialog.setMessage("Please Wait");
+//        progressDialog.show();
+        androidModule = AndroidModule.getInstance(getContext());
+        androidModule.showLoadingDialogue();
 
         FetchData fetchData = new FetchData(new GetJSONString() {
             @Override
@@ -118,7 +122,7 @@ public class HomeFragment extends Fragment {
                     cardRecovered.setText(list.get(list.size() - 1).getTotalrecovered());
                     cardActive.setText(list.get(list.size() - 1).getTotalconfirmed());
                     plotChart();
-                    progressDialog.dismiss();
+                    androidModule.dismissDialogue();
                 }
 
             }
@@ -221,4 +225,9 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        androidModule.dispose();
+    }
 }
