@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Demographics">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.anychart.AnyChartView
+                android:id="@+id/genderPieChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_alignParentTop="true" />
+
+            <com.anychart.AnyChartView
+                android:id="@+id/ageRange"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/genderPieChart" />
+
+            <com.anychart.AnyChartView
+                android:id="@+id/totalCaseChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/ageRange" />
+
+            <com.anychart.AnyChartView
+                android:id="@+id/testingChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/totalCaseChart" />
+
+            <com.anychart.AnyChartView
+                android:id="@+id/stateTestingChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/testingChart" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

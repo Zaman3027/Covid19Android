@@ -1,6 +1,5 @@
 package com.mahafuz.covid19tracker.Fragment;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,13 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.anychart.AnyChart;
@@ -25,6 +20,7 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Column;
 import com.anychart.core.cartesian.series.Line;
 import com.anychart.data.Mapping;
 import com.anychart.data.Set;
@@ -32,27 +28,20 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
-import com.google.gson.Gson;
-import com.mahafuz.covid19tracker.ApiInterface.FetchData;
-import com.mahafuz.covid19tracker.ApiInterface.GetJSONString;
-import com.mahafuz.covid19tracker.BaseAct;
-import com.mahafuz.covid19tracker.Home;
+import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
-import com.mahafuz.covid19tracker.Model.Cases_time_series;
-import com.mahafuz.covid19tracker.Model.DailyStateModel;
-import com.mahafuz.covid19tracker.Model.SateWiseModel;
+import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class HomeFragment extends Fragment {
-    List<Cases_time_series> list;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -62,11 +51,11 @@ public class HomeFragment extends Fragment {
     int screenWidth;
     AnyChartView anyChartView;
     TextView cardActive, cardRecovered, cardDeceased;
-    CardView cardAllIndia;
+    CardView cardAllIndia, cardDemographic;
     FragmentCall fragmentCall;
     ProgressDialog progressDialog;
-    List<SateWiseModel> sateWiseModelList;
     AndroidModule androidModule;
+    RetroFitInstance retroFitInstance;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,47 +77,10 @@ public class HomeFragment extends Fragment {
         cardRecovered = getView().findViewById(R.id.cardRecovered);
         cardDeceased = getView().findViewById(R.id.cardDeceased);
         cardAllIndia = getView().findViewById(R.id.cardAllIndia);
-        list = new ArrayList<>();
-        sateWiseModelList = new ArrayList<>();
-//        progressDialog.setTitle("Loading");
-//        progressDialog.setMessage("Please Wait");
-//        progressDialog.show();
+        cardDemographic = getView().findViewById(R.id.cardDemographic);
+        retroFitInstance = new RetroFitInstance();
         androidModule = AndroidModule.getInstance(getContext());
         androidModule.showLoadingDialogue();
-
-        FetchData fetchData = new FetchData(new GetJSONString() {
-            @Override
-            public void getData(String data) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(data);
-                    JSONArray jsonArray = jsonObject.getJSONArray("cases_time_series");
-                    JSONArray stateWiseJsonArray = jsonObject.getJSONArray("statewise");
-                    Gson gson = new Gson();
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        list.add(gson.fromJson(jsonArray.getString(i), Cases_time_series.class));
-                    }
-
-                    for (int i = 0; i < stateWiseJsonArray.length(); i++) {
-                        sateWiseModelList.add(gson.fromJson(stateWiseJsonArray.getString(i), SateWiseModel.class));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                if (list.size() > 0) {
-                    cardDeceased.setText(list.get(list.size() - 1).getTotaldeceased());
-                    cardRecovered.setText(list.get(list.size() - 1).getTotalrecovered());
-                    cardActive.setText(list.get(list.size() - 1).getTotalconfirmed());
-                    plotChart();
-                    androidModule.dismissDialogue();
-                }
-
-            }
-        });
-        fetchData.execute();
-
 
         cardAllIndia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,9 +92,37 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        cardDemographic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.navigation_drawer_frame, new Demographics(), "All India")
+                        .addToBackStack("All India")
+                        .commit();
+            }
+        });
+
+        retroFitInstance.getApi().getCaseModelCall().enqueue(new Callback<DailyCaseModel>() {
+            @Override
+            public void onResponse(Call<DailyCaseModel> call, Response<DailyCaseModel> response) {
+                androidModule.dismissDialogue();
+                if (response.isSuccessful()) {
+                    plotChart(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DailyCaseModel> call, Throwable t) {
+
+            }
+        });
+
     }
 
-    private void plotChart() {
+    private void plotChart(DailyCaseModel dailyCaseModel) {
+        cardDeceased.setText(dailyCaseModel.getDailydeceased().get(dailyCaseModel.getDailyconfirmed().size() - 1).getValue());
+        cardRecovered.setText(dailyCaseModel.getDailyrecovered().get(dailyCaseModel.getDailyconfirmed().size() - 1).getValue());
+        cardActive.setText(dailyCaseModel.getDailyconfirmed().get(dailyCaseModel.getDailyconfirmed().size() - 1).getValue());
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
         cartesian.crosshair().enabled(true);
@@ -157,12 +137,14 @@ public class HomeFragment extends Fragment {
 
 
         List<DataEntry> seriesData = new ArrayList<>();
-        for (Cases_time_series cases_time_series : list) {
-            seriesData.add(new CustomDataEntry(cases_time_series.getDate(),
-                    Integer.parseInt(cases_time_series.getDailyconfirmed()),
-                    Integer.parseInt(cases_time_series.getDailyrecovered()),
-                    Integer.parseInt(cases_time_series.getDailydeceased())
+        for (int i = 0; i < dailyCaseModel.getDailydeceased().size(); i++) {
+            seriesData.add(new CustomDataEntry(
+                    dailyCaseModel.getDailyconfirmed().get(i).getDate(),
+                    Integer.parseInt(dailyCaseModel.getDailyconfirmed().get(i).getValue()),
+                    Integer.parseInt(dailyCaseModel.getDailyrecovered().get(i).getValue()),
+                    Integer.parseInt(dailyCaseModel.getDailydeceased().get(i).getValue())
             ));
+
         }
 
 

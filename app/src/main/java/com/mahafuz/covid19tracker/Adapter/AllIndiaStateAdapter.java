@@ -3,7 +3,6 @@ package com.mahafuz.covid19tracker.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
-import com.mahafuz.covid19tracker.Model.SateWiseModel;
+import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.R;
 
 import java.util.List;
@@ -19,12 +18,12 @@ import java.util.List;
 public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdapter.MyViewHolder> {
     CardView parentList;
     FragmentCall fragmentCall;
-    List<SateWiseModel> sateWiseModelList;
     TextView listText;
+    String[] indiaState;
 
-    public AllIndiaStateAdapter(FragmentCall fragmentCall, List<SateWiseModel> sateWiseModelList) {
+    public AllIndiaStateAdapter(FragmentCall fragmentCall, String[] indiaState) {
         this.fragmentCall = fragmentCall;
-        this.sateWiseModelList = sateWiseModelList;
+        this.indiaState = indiaState;
     }
 
     @NonNull
@@ -35,18 +34,18 @@ public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        listText.setText(sateWiseModelList.get(position).getState());
+        listText.setText(indiaState[position]);
         parentList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentCall.indiaFragmentCall(position, sateWiseModelList.get(position).getStatecode());
+                fragmentCall.indiaFragmentCall(position, indiaState[position]);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return sateWiseModelList.size();
+        return indiaState.length;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

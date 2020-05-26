@@ -31,7 +31,6 @@ public class AndroidModule {
                 .setView(loadingView)
                 .create();
         alertDialog.setCancelable(false);
-        alertDialog.getWindow().setLayout(100, 100);
         alertDialog.show();
     }
 
