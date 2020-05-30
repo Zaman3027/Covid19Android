@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -40,7 +41,7 @@ import retrofit2.Response;
  */
 public class AllIndiaChartFragment extends Fragment {
     String stateName;
-    AnyChartView any_chart_view_India;
+    AnyChartView any_chart_view_India, any_chart_view_test;
     RetroFitInstance retroFitInstance;
 
     public AllIndiaChartFragment(String stateName) {
@@ -62,17 +63,15 @@ public class AllIndiaChartFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        any_chart_view_India = getView().findViewById(R.id.any_chart_view_India);
-        retroFitInstance.getApi().getStateChoiceList(stateName).enqueue(new Callback<List<StateChoiceModel>>() {
+        retroFitInstance.getApi().getStateChoiceList(stateName).enqueue(new Callback<StateChoiceModel>() {
             @Override
-            public void onResponse(Call<List<StateChoiceModel>> call, Response<List<StateChoiceModel>> response) {
-                if (response.isSuccessful()) {
-                    plotChart(response.body());
-                }
+            public void onResponse(Call<StateChoiceModel> call, Response<StateChoiceModel> response) {
+                plotChart(response.body());
+                plotChartTest(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<StateChoiceModel>> call, Throwable t) {
+            public void onFailure(Call<StateChoiceModel> call, Throwable t) {
 
             }
         });
@@ -80,7 +79,9 @@ public class AllIndiaChartFragment extends Fragment {
 
     }
 
-    private void plotChart(List<StateChoiceModel> stateChoiceModelList) {
+    private void plotChart(StateChoiceModel stateChoiceModelList) {
+        any_chart_view_India = getView().findViewById(R.id.any_chart_view_India);
+        APIlib.getInstance().setActiveAnyChartView(any_chart_view_India);
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
         cartesian.crosshair().enabled(true);
@@ -92,12 +93,12 @@ public class AllIndiaChartFragment extends Fragment {
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
-        for (int i = 0; i < stateChoiceModelList.size(); i++) {
+        for (int i = 0; i < stateChoiceModelList.getStateCase().size(); i++) {
             seriesData.add(new CustomDataEntry(
-                    stateChoiceModelList.get(i).getDate(),
-                    Integer.parseInt(stateChoiceModelList.get(i).getConfirmed()),
-                    Integer.parseInt(stateChoiceModelList.get(i).getRecovered()),
-                    Integer.parseInt(stateChoiceModelList.get(i).getDeaths())
+                    stateChoiceModelList.getStateCase().get(i).getDate(),
+                    Integer.parseInt(stateChoiceModelList.getStateCase().get(i).getConfirmed()),
+                    Integer.parseInt(stateChoiceModelList.getStateCase().get(i).getRecovered()),
+                    Integer.parseInt(stateChoiceModelList.getStateCase().get(i).getDeaths())
             ));
 
         }
@@ -150,6 +151,49 @@ public class AllIndiaChartFragment extends Fragment {
         cartesian.legend().padding(0d, 0d, 10d, 0d);
 
         any_chart_view_India.setChart(cartesian);
+    }
+
+    private void plotChartTest(StateChoiceModel stateChoiceModelList) {
+        any_chart_view_test = getView().findViewById(R.id.any_chart_view_test);
+        APIlib.getInstance().setActiveAnyChartView(any_chart_view_test);
+        Cartesian cartesian = AnyChart.line();
+        cartesian.animation(true);
+        cartesian.crosshair().enabled(true);
+        cartesian.crosshair()
+                .yLabel(true)
+                .yStroke((Stroke) null, null, null, (String) null, (String) null);
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.title("Testing of " + stateName.toUpperCase());
+        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
+
+        List<DataEntry> seriesData = new ArrayList<>();
+        for (int i = 0; i < stateChoiceModelList.getStateTest().size(); i++) {
+            seriesData.add(new ValueDataEntry(
+                    stateChoiceModelList.getStateTest().get(i).getDate(),
+                    (int) Float.parseFloat(stateChoiceModelList.getStateTest().get(i).getValue())
+            ));
+
+        }
+
+
+        Line series1 = cartesian.line(seriesData);
+        series1.name("Test");
+        series1.color("#004d40");
+        series1.hovered().markers().enabled(true);
+        series1.hovered().markers()
+                .type(MarkerType.CIRCLE)
+                .size(4d);
+        series1.tooltip()
+                .position("right")
+                .anchor(Anchor.LEFT_CENTER)
+                .offsetX(5d)
+                .offsetY(5d);
+
+        cartesian.legend().enabled(true);
+        cartesian.legend().fontSize(13d);
+        cartesian.legend().padding(0d, 0d, 10d, 0d);
+
+        any_chart_view_test.setChart(cartesian);
     }
 
     static class CustomDataEntry extends ValueDataEntry {

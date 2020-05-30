@@ -3,23 +3,23 @@ package com.mahafuz.covid19tracker.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TotalCaseModel {
+public class StateCase {
 
-    @SerializedName("active")
+    @SerializedName("Active")
     @Expose
     private String active;
-    @SerializedName("confirmed")
+    @SerializedName("Confirmed")
     @Expose
     private String confirmed;
+    @SerializedName("Deaths")
+    @Expose
+    private String deaths;
+    @SerializedName("Recovered")
+    @Expose
+    private String recovered;
     @SerializedName("date")
     @Expose
     private String date;
-    @SerializedName("deceased")
-    @Expose
-    private String deceased;
-    @SerializedName("recovered")
-    @Expose
-    private String recovered;
 
     public String getActive() {
         return active;
@@ -37,20 +37,12 @@ public class TotalCaseModel {
         this.confirmed = confirmed;
     }
 
-    public String getDate() {
-        return date.substring(0, 10);
+    public String getDeaths() {
+        return deaths;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDeceased() {
-        return deceased;
-    }
-
-    public void setDeceased(String deceased) {
-        this.deceased = deceased;
+    public void setDeaths(String deaths) {
+        this.deaths = deaths;
     }
 
     public String getRecovered() {
@@ -59,6 +51,14 @@ public class TotalCaseModel {
 
     public void setRecovered(String recovered) {
         this.recovered = recovered;
+    }
+
+    public String getDate() {
+        return date.substring(0, 10);
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
 }

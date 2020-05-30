@@ -17,7 +17,7 @@ public class TestingModel {
     private String totalsamplestested;
 
     public String getDate() {
-        return date;
+        return date.substring(0, 10);
     }
 
     public void setDate(String date) {

@@ -5,11 +5,25 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.AllIndiaChartFragment">
 
-    <com.anychart.AnyChartView
-        android:id="@+id/any_chart_view_India"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="0dp"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
 
+        <com.anychart.AnyChartView
+            android:id="@+id/any_chart_view_India"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="0dp"
+            android:visibility="visible"
+            android:layout_alignParentTop="true" />
+
+        <com.anychart.AnyChartView
+            android:id="@+id/any_chart_view_test"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp"
+            android:visibility="visible"
+            android:layout_below="@id/any_chart_view_India" />
+
+    </RelativeLayout>
 </FrameLayout>

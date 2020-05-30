@@ -77,7 +77,7 @@ public class HomeChartFragment extends Fragment {
 
         List<DataEntry> seriesData = new ArrayList<>();
         for (int i = 0; i < dailyCaseModel.size(); i++) {
-            Log.i("HOMEFRAGMENT", dailyCaseModel.get(i).getDate());
+            Log.i("HOMEFRAGMENT", dailyCaseModel.get(i).getDate().substring(0, 10));
             seriesData.add(new HomeFragment.CustomDataEntry(
                     dailyCaseModel.get(i).getDate(),
                     Integer.parseInt(dailyCaseModel.get(i).getConfirmed()),

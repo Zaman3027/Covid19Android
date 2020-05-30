@@ -107,7 +107,7 @@ public class Demographics extends Fragment {
                         entryList.add(new ValueDataEntry(ageRangeModel.getRange(), ageRangeModel.getValue()));
                     }
 
-                    cartesian.column(entryList);
+                    cartesian.column(entryList).color("#00c853");
                     cartesian.xAxis(0).title("Age");
                     cartesian.yAxis(0).title("Infected");
                     ageRange.setChart(cartesian);
@@ -150,7 +150,7 @@ public class Demographics extends Fragment {
                     for (TestingModel testingModel : response.body()) {
                         entryList.add(new ValueDataEntry(testingModel.getDate(), Float.parseFloat(testingModel.getTestspermillion())));
                     }
-                    chart.data(entryList);
+                    chart.column(entryList).color("#dd2c00");
                     testingChart.setChart(chart);
 
                 }
@@ -175,7 +175,8 @@ public class Demographics extends Fragment {
                     for (StateTestingModel testingModel : response.body()) {
                         entryList.add(new ValueDataEntry(testingModel.getState(), Float.parseFloat(testingModel.getValue())));
                     }
-                    chart.data(entryList);
+                    Column column = chart.column(entryList);
+                    column.color("#e65100");
                     stateTestingChart.setChart(chart);
                 }
             }

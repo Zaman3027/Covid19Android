@@ -1,7 +1,14 @@
 package com.mahafuz.covid19tracker.Model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class DailyCaseModel {
 
@@ -27,7 +34,7 @@ public class DailyCaseModel {
     }
 
     public String getDate() {
-        return date;
+        return date.substring(0, 10);
     }
 
     public void setDate(String date) {

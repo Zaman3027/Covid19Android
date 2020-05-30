@@ -38,5 +38,5 @@ public interface RetrofitApi {
     Call<List<StateTestingModel>> getStateTestingModel();
 
     @GET("/getstatedata/{statename}")
-    Call<List<StateChoiceModel>> getStateChoiceList(@Path("statename") String stateName);
+    Call<StateChoiceModel> getStateChoiceList(@Path("statename") String stateName);
 }

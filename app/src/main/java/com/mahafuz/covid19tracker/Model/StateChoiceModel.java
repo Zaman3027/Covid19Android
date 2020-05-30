@@ -1,64 +1,32 @@
 package com.mahafuz.covid19tracker.Model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class StateChoiceModel {
 
-    @SerializedName("Active")
+    @SerializedName("stateCase")
     @Expose
-    private String active;
-    @SerializedName("Confirmed")
+    private List<StateCase> stateCase = null;
+    @SerializedName("stateTest")
     @Expose
-    private String confirmed;
-    @SerializedName("Deaths")
-    @Expose
-    private String deaths;
-    @SerializedName("Recovered")
-    @Expose
-    private String recovered;
-    @SerializedName("date")
-    @Expose
-    private String date;
+    private List<StateTest> stateTest = null;
 
-    public String getActive() {
-        return active;
+    public List<StateCase> getStateCase() {
+        return stateCase;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setStateCase(List<StateCase> stateCase) {
+        this.stateCase = stateCase;
     }
 
-    public String getConfirmed() {
-        return confirmed;
+    public List<StateTest> getStateTest() {
+        return stateTest;
     }
 
-    public void setConfirmed(String confirmed) {
-        this.confirmed = confirmed;
-    }
-
-    public String getDeaths() {
-        return deaths;
-    }
-
-    public void setDeaths(String deaths) {
-        this.deaths = deaths;
-    }
-
-    public String getRecovered() {
-        return recovered;
-    }
-
-    public void setRecovered(String recovered) {
-        this.recovered = recovered;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setStateTest(List<StateTest> stateTest) {
+        this.stateTest = stateTest;
     }
 
 }
