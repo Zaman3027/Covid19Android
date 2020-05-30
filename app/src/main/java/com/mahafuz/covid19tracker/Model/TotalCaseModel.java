@@ -1,55 +1,64 @@
 package com.mahafuz.covid19tracker.Model;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class TotalCaseModel {
 
-    @SerializedName("totalactive")
+    @SerializedName("active")
     @Expose
-    private List<Totalactive> totalactive = null;
-    @SerializedName("totalconfirmed")
+    private String active;
+    @SerializedName("confirmed")
     @Expose
-    private List<Totalconfirmed> totalconfirmed = null;
-    @SerializedName("totaldeceased")
+    private String confirmed;
+    @SerializedName("date")
     @Expose
-    private List<Totaldeceased> totaldeceased = null;
-    @SerializedName("totalrecovered")
+    private String date;
+    @SerializedName("deceased")
     @Expose
-    private List<Totalrecovered> totalrecovered = null;
+    private String deceased;
+    @SerializedName("recovered")
+    @Expose
+    private String recovered;
 
-    public List<Totalactive> getTotalactive() {
-        return totalactive;
+    public String getActive() {
+        return active;
     }
 
-    public void setTotalactive(List<Totalactive> totalactive) {
-        this.totalactive = totalactive;
+    public void setActive(String active) {
+        this.active = active;
     }
 
-    public List<Totalconfirmed> getTotalconfirmed() {
-        return totalconfirmed;
+    public String getConfirmed() {
+        return confirmed;
     }
 
-    public void setTotalconfirmed(List<Totalconfirmed> totalconfirmed) {
-        this.totalconfirmed = totalconfirmed;
+    public void setConfirmed(String confirmed) {
+        this.confirmed = confirmed;
     }
 
-    public List<Totaldeceased> getTotaldeceased() {
-        return totaldeceased;
+    public String getDate() {
+        return date;
     }
 
-    public void setTotaldeceased(List<Totaldeceased> totaldeceased) {
-        this.totaldeceased = totaldeceased;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public List<Totalrecovered> getTotalrecovered() {
-        return totalrecovered;
+    public String getDeceased() {
+        return deceased;
     }
 
-    public void setTotalrecovered(List<Totalrecovered> totalrecovered) {
-        this.totalrecovered = totalrecovered;
+    public void setDeceased(String deceased) {
+        this.deceased = deceased;
+    }
+
+    public String getRecovered() {
+        return recovered;
+    }
+
+    public void setRecovered(String recovered) {
+        this.recovered = recovered;
     }
 
 }

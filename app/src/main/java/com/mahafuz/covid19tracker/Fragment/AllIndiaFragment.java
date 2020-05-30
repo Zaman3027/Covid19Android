@@ -58,12 +58,14 @@ public class AllIndiaFragment extends Fragment implements FragmentCall {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_all_india, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        androidModule = new AndroidModule(getContext());
         all_india_recycler_view = getView().findViewById(R.id.all_india_recycler_view);
         all_india_recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
         all_india_recycler_view.setAdapter(new AllIndiaStateAdapter(this::indiaFragmentCall, getResources().getStringArray(R.array.india_states)));

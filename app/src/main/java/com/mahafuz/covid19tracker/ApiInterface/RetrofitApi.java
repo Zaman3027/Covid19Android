@@ -20,7 +20,7 @@ public interface RetrofitApi {
 
     @Headers("Content-Type: application/json")
     @GET("/getdailycase")
-    Call<DailyCaseModel> getCaseModelCall();
+    Call<List<DailyCaseModel>> getCaseModelCall();
 
     @GET("/gender_ratio")
     Call<GenderModel> getGenderModelCall();
@@ -29,7 +29,7 @@ public interface RetrofitApi {
     Call<List<AgeRangeModel>> getAgeRangeModelListCall();
 
     @GET("/gettotalcase")
-    Call<TotalCaseModel> getTotalCaseModel();
+    Call<List<TotalCaseModel>> getTotalCaseModel();
 
     @GET("/getTestPerMil")
     Call<List<TestingModel>> getTestingModelList();

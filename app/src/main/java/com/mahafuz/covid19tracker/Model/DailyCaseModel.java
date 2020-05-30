@@ -1,44 +1,53 @@
 package com.mahafuz.covid19tracker.Model;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class DailyCaseModel {
 
-    @SerializedName("dailyconfirmed")
+    @SerializedName("confirmed")
     @Expose
-    private List<Dailyconfirmed> dailyconfirmed = null;
-    @SerializedName("dailydeceased")
+    private String confirmed;
+    @SerializedName("date")
     @Expose
-    private List<Dailydeceased> dailydeceased = null;
-    @SerializedName("dailyrecovered")
+    private String date;
+    @SerializedName("deceased")
     @Expose
-    private List<Dailyrecovered> dailyrecovered = null;
+    private String deceased;
+    @SerializedName("recovered")
+    @Expose
+    private String recovered;
 
-    public List<Dailyconfirmed> getDailyconfirmed() {
-        return dailyconfirmed;
+    public String getConfirmed() {
+        return confirmed;
     }
 
-    public void setDailyconfirmed(List<Dailyconfirmed> dailyconfirmed) {
-        this.dailyconfirmed = dailyconfirmed;
+    public void setConfirmed(String confirmed) {
+        this.confirmed = confirmed;
     }
 
-    public List<Dailydeceased> getDailydeceased() {
-        return dailydeceased;
+    public String getDate() {
+        return date;
     }
 
-    public void setDailydeceased(List<Dailydeceased> dailydeceased) {
-        this.dailydeceased = dailydeceased;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public List<Dailyrecovered> getDailyrecovered() {
-        return dailyrecovered;
+    public String getDeceased() {
+        return deceased;
     }
 
-    public void setDailyrecovered(List<Dailyrecovered> dailyrecovered) {
-        this.dailyrecovered = dailyrecovered;
+    public void setDeceased(String deceased) {
+        this.deceased = deceased;
+    }
+
+    public String getRecovered() {
+        return recovered;
+    }
+
+    public void setRecovered(String recovered) {
+        this.recovered = recovered;
     }
 
 }

@@ -122,9 +122,9 @@ public class Demographics extends Fragment {
             }
         });
 
-        retroFitInstance.getApi().getTotalCaseModel().enqueue(new Callback<TotalCaseModel>() {
+        retroFitInstance.getApi().getTotalCaseModel().enqueue(new Callback<List<TotalCaseModel>>() {
             @Override
-            public void onResponse(Call<TotalCaseModel> call, Response<TotalCaseModel> response) {
+            public void onResponse(Call<List<TotalCaseModel>> call, Response<List<TotalCaseModel>> response) {
                 if (response.isSuccessful()) {
                     APIlib.getInstance().setActiveAnyChartView(totalCaseChart);
                     plotChart(response.body());
@@ -132,7 +132,7 @@ public class Demographics extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<TotalCaseModel> call, Throwable t) {
+            public void onFailure(Call<List<TotalCaseModel>> call, Throwable t) {
 
             }
         });
@@ -188,7 +188,8 @@ public class Demographics extends Fragment {
 
     }
 
-    private void plotChart(TotalCaseModel dailyCaseModel) {
+    private void plotChart(List<TotalCaseModel> dailyCaseModel) {
+        Log.i("HOMEFRAGMENT", "" + dailyCaseModel.size());
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
         cartesian.crosshair().enabled(true);
@@ -197,18 +198,19 @@ public class Demographics extends Fragment {
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Total Cases Trend");
+        cartesian.title("Daily Cases");
 
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
 
         List<DataEntry> seriesData = new ArrayList<>();
-        for (int i = 0; i < dailyCaseModel.getTotalactive().size(); i++) {
+        for (int i = 0; i < dailyCaseModel.size(); i++) {
+            Log.i("HOMEFRAGMENT", dailyCaseModel.get(i).getDate());
             seriesData.add(new HomeFragment.CustomDataEntry(
-                    dailyCaseModel.getTotalactive().get(i).getDate(),
-                    Integer.parseInt(dailyCaseModel.getTotalconfirmed().get(i).getValue()),
-                    Integer.parseInt(dailyCaseModel.getTotalrecovered().get(i).getValue()),
-                    Integer.parseInt(dailyCaseModel.getTotaldeceased().get(i).getValue())
+                    dailyCaseModel.get(i).getDate(),
+                    Integer.parseInt(dailyCaseModel.get(i).getConfirmed()),
+                    Integer.parseInt(dailyCaseModel.get(i).getRecovered()),
+                    Integer.parseInt(dailyCaseModel.get(i).getDeceased())
             ));
 
         }
