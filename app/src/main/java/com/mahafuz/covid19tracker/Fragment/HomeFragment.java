@@ -1,6 +1,7 @@
 package com.mahafuz.covid19tracker.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment {
     int screenWidth;
     AnyChartView anyChartView;
     TextView cardActive, cardRecovered, cardDeceased;
-    CardView cardAllIndia, cardDemographic;
+    CardView cardAllIndia, cardDemographic,infected_probability,model_prediction;
     FragmentCall fragmentCall;
     ProgressDialog progressDialog;
     AndroidModule androidModule;
@@ -88,6 +89,8 @@ public class HomeFragment extends Fragment {
         radioAll = getView().findViewById(R.id.radioAll);
         cardAllIndia = getView().findViewById(R.id.cardAllIndia);
         cardDemographic = getView().findViewById(R.id.cardDemographic);
+        infected_probability = getView().findViewById(R.id.infected_probability);
+        model_prediction = getView().findViewById(R.id.model_prediction);
         retroFitInstance = new RetroFitInstance();
         androidModule = AndroidModule.getInstance(getContext());
         androidModule.showLoadingDialogue();
@@ -168,6 +171,20 @@ public class HomeFragment extends Fragment {
                         .replace(R.id.any_chart_view_fragment,
                                 new HomeChartFragment(dailyCaseModel))
                         .commit();
+            }
+        });
+
+        infected_probability.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        model_prediction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), PredictionActivity.class));
             }
         });
     }

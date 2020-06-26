@@ -1,5 +1,6 @@
 package com.mahafuz.covid19tracker;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -15,7 +16,7 @@ public class Home extends BaseAct {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.navigation_drawer_frame, new HomeFragment(), "Home")
                 .addToBackStack("Home")

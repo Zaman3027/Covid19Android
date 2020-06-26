@@ -55,13 +55,13 @@ public class HomeChartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         any_chart_view = getView().findViewById(R.id.any_chart_view);
+        if (this.dailyCaseModelList!=null)
         plotChart(this.dailyCaseModelList);
 
 
     }
 
     private void plotChart(List<DailyCaseModel> dailyCaseModel) {
-        Log.i("HOMEFRAGMENT", "" + dailyCaseModel.size());
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
         cartesian.crosshair().enabled(true);

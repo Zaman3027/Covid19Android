@@ -25,14 +25,19 @@ public class TestingModel {
     }
 
     public String getTestspermillion() {
+        if (testspermillion.equals("nan"))
+            return "0";
         return testspermillion;
     }
 
     public void setTestspermillion(String testspermillion) {
+
         this.testspermillion = testspermillion;
     }
 
     public String getTotalsamplestested() {
+        if (totalsamplestested.equals("nan"))
+            return "0";
         return totalsamplestested;
     }
 
