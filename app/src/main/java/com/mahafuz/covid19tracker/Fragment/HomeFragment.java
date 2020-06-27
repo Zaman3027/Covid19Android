@@ -19,20 +19,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.anychart.APIlib;
-import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.core.cartesian.series.Column;
-import com.anychart.core.cartesian.series.Line;
-import com.anychart.data.Mapping;
-import com.anychart.data.Set;
-import com.anychart.enums.Anchor;
-import com.anychart.enums.MarkerType;
-import com.anychart.enums.TooltipPositionMode;
-import com.anychart.graphics.vector.Stroke;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
+import com.mahafuz.covid19tracker.BaseAct;
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.TotalCaseModel;
@@ -56,7 +46,7 @@ public class HomeFragment extends Fragment {
     int screenWidth;
     AnyChartView anyChartView;
     TextView cardActive, cardRecovered, cardDeceased;
-    CardView cardAllIndia, cardDemographic,infected_probability,model_prediction;
+    CardView cardIndiaStates, cardDemographic,infected_probability,model_prediction;
     FragmentCall fragmentCall;
     ProgressDialog progressDialog;
     AndroidModule androidModule;
@@ -69,6 +59,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         dailyCaseModel = new ArrayList<>();
         screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -87,7 +78,7 @@ public class HomeFragment extends Fragment {
         radio_1_month = getView().findViewById(R.id.radio_1_month);
         radio_2_months = getView().findViewById(R.id.radio_2_months);
         radioAll = getView().findViewById(R.id.radioAll);
-        cardAllIndia = getView().findViewById(R.id.cardAllIndia);
+        cardIndiaStates = getView().findViewById(R.id.cardAllIndia);
         cardDemographic = getView().findViewById(R.id.cardDemographic);
         infected_probability = getView().findViewById(R.id.infected_probability);
         model_prediction = getView().findViewById(R.id.model_prediction);
@@ -96,11 +87,11 @@ public class HomeFragment extends Fragment {
         androidModule.showLoadingDialogue();
         APIlib.getInstance().setActiveAnyChartView(anyChartView);
 
-        cardAllIndia.setOnClickListener(new View.OnClickListener() {
+        cardIndiaStates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.navigation_drawer_frame, new AllIndiaFragment(), "All India")
+                        .replace(R.id.navigation_drawer_frame, new IndiaStatesFragment(), "All India")
                         .addToBackStack("All India")
                         .commit();
             }

@@ -4,9 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,6 @@ import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
-import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.StateChoiceModel;
 import com.mahafuz.covid19tracker.R;
 
@@ -39,16 +38,16 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllIndiaChartFragment extends Fragment {
+public class IndiaStatesChartFragment extends Fragment {
     String stateName;
     AnyChartView any_chart_view_India, any_chart_view_test;
     RetroFitInstance retroFitInstance;
 
-    public AllIndiaChartFragment(String stateName) {
+    public IndiaStatesChartFragment(String stateName) {
         this.stateName = stateName;
     }
 
-    public AllIndiaChartFragment() {
+    public IndiaStatesChartFragment() {
         // Required empty public constructor
     }
 
@@ -57,7 +56,8 @@ public class AllIndiaChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         retroFitInstance = new RetroFitInstance();
-        return inflater.inflate(R.layout.fragment_all_india_chart, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        return inflater.inflate(R.layout.fragment_india__states_chart, container, false);
     }
 
     @Override

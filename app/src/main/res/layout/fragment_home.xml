@@ -71,7 +71,7 @@
                         android:text="555"
                         android:textAlignment="center"
                         android:textColor="#2B59A2"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -125,7 +125,7 @@
                         android:text="555"
                         android:textAlignment="center"
                         android:textColor="#015b25"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -180,7 +180,7 @@
                         android:text="555"
                         android:textAlignment="center"
                         android:textColor="#5a0502"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -275,7 +275,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    android:src="@drawable/arrow_white" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -312,7 +312,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
 
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    android:src="@drawable/arrow_white" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -349,7 +349,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    android:src="@drawable/arrow_white" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -384,7 +384,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    android:src="@drawable/arrow_white" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
@@ -420,7 +420,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
 
-                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    android:src="@drawable/arrow_white" />
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
