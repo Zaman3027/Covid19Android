@@ -1,16 +1,14 @@
 package com.mahafuz.covid19tracker.Fragment;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -27,10 +25,8 @@ import com.anychart.graphics.vector.Stroke;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
 import com.mahafuz.covid19tracker.Model.StateChoiceModel;
 import com.mahafuz.covid19tracker.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +36,7 @@ import retrofit2.Response;
  */
 public class IndiaStatesChartFragment extends Fragment {
     String stateName;
+    TextView stateNameTextView, confirmedTextView, recoveredTextView, deceasedTextView, testTextView;
     AnyChartView any_chart_view_India, any_chart_view_test;
     RetroFitInstance retroFitInstance;
 
@@ -57,12 +54,14 @@ public class IndiaStatesChartFragment extends Fragment {
                              Bundle savedInstanceState) {
         retroFitInstance = new RetroFitInstance();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        return inflater.inflate(R.layout.fragment_india__states_chart, container, false);
+        return inflater.inflate(R.layout.fragment_india_states_chart, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        stateNameTextView = (TextView) getView().findViewById(R.id.indian_state_name);
+        stateNameTextView.setText(capitalize(stateName));
         retroFitInstance.getApi().getStateChoiceList(stateName).enqueue(new Callback<StateChoiceModel>() {
             @Override
             public void onResponse(Call<StateChoiceModel> call, Response<StateChoiceModel> response) {
@@ -79,8 +78,22 @@ public class IndiaStatesChartFragment extends Fragment {
 
     }
 
+    private String capitalize(String str) {
+        String words[]=str.split("\\s");
+        String capitalizeWord="";
+        for(String w:words){
+            String first = w.substring(0,1);
+            String afterFirst = w.substring(1);
+            capitalizeWord += first.toUpperCase()+afterFirst+" ";
+        }
+        return capitalizeWord.trim();
+    }
+
     private void plotChart(StateChoiceModel stateChoiceModelList) {
         any_chart_view_India = getView().findViewById(R.id.any_chart_view_India);
+        confirmedTextView = (TextView) getView().findViewById(R.id.state_confirmed);
+        recoveredTextView = (TextView) getView().findViewById(R.id.state_recovered);
+        deceasedTextView = (TextView) getView().findViewById(R.id.state_deceased);
         APIlib.getInstance().setActiveAnyChartView(any_chart_view_India);
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
@@ -89,11 +102,12 @@ public class IndiaStatesChartFragment extends Fragment {
                 .yLabel(true)
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-        cartesian.title("Daily Cases of " + stateName.toUpperCase());
+        cartesian.title("Daily Cases");
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
-        for (int i = 0; i < stateChoiceModelList.getStateCase().size(); i++) {
+        int size = stateChoiceModelList.getStateCase().size();
+        for (int i = 0; i < size; i++) {
             seriesData.add(new CustomDataEntry(
                     stateChoiceModelList.getStateCase().get(i).getDate(),
                     Integer.parseInt(stateChoiceModelList.getStateCase().get(i).getConfirmed()),
@@ -102,7 +116,9 @@ public class IndiaStatesChartFragment extends Fragment {
             ));
 
         }
-
+        confirmedTextView.setText("Confirmed: " + seriesData.get(size-1).getValue("value").toString());
+        recoveredTextView.setText("Recovered: " + seriesData.get(size-1).getValue("value2").toString());
+        deceasedTextView.setText("Deceased: " + seriesData.get(size-1).getValue("value3").toString());
 
         Set set = Set.instantiate();
         set.data(seriesData);
@@ -155,6 +171,7 @@ public class IndiaStatesChartFragment extends Fragment {
 
     private void plotChartTest(StateChoiceModel stateChoiceModelList) {
         any_chart_view_test = getView().findViewById(R.id.any_chart_view_test);
+        testTextView = (TextView) getView().findViewById(R.id.state_tested);
         APIlib.getInstance().setActiveAnyChartView(any_chart_view_test);
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
@@ -163,19 +180,20 @@ public class IndiaStatesChartFragment extends Fragment {
                 .yLabel(true)
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-        cartesian.title("Testing of " + stateName.toUpperCase());
+        cartesian.title("Testing");
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
-        for (int i = 0; i < stateChoiceModelList.getStateTest().size(); i++) {
+        int i;
+        for ( i = 0; i < stateChoiceModelList.getStateTest().size(); i++) {
             seriesData.add(new ValueDataEntry(
                     stateChoiceModelList.getStateTest().get(i).getDate(),
                     (int) Float.parseFloat(stateChoiceModelList.getStateTest().get(i).getValue())
             ));
 
         }
-
-
+        String formattedTestString = stateChoiceModelList.getStateTest().get(i-1).getValue();
+        testTextView.setText("Tested: " + formattedTestString.substring(0, formattedTestString.length()-2));
         Line series1 = cartesian.line(seriesData);
         series1.name("Test");
         series1.color("#004d40");

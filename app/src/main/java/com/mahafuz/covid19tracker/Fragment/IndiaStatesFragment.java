@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,8 @@ public class IndiaStatesFragment extends Fragment implements FragmentCall {
     }
 
     @Override
-    public void indiaFragmentCall(int position, String stateCode) {
-        getFragmentManager().beginTransaction().replace(R.id.navigation_drawer_frame, new IndiaStatesChartFragment(stateCode.toLowerCase()))
+    public void indiaFragmentCall(int position, String stateName) {
+        getFragmentManager().beginTransaction().replace(R.id.navigation_drawer_frame, new IndiaStatesChartFragment(stateName.toLowerCase()))
                 .addToBackStack("home")
                 .commit();
     }
