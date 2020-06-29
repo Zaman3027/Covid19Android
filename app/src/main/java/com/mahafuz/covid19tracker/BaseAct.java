@@ -12,8 +12,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 
 public class BaseAct extends AppCompatActivity {
-    ProgressDialog progressDialog;
-    ActionBar actionBar;
+    public ProgressDialog progressDialog;
+    public ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class BaseAct extends AppCompatActivity {
         getSupportActionBar().hide();
     }
 
-    void hideActionBar(){
+    public void hideActionBar(){
         getSupportActionBar().hide();
     }
 

@@ -3,22 +3,15 @@ package com.mahafuz.covid19tracker.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
-import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.R;
 
-import java.util.List;
-
 public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdapter.MyViewHolder> {
-    CardView parentList;
     FragmentCall fragmentCall;
-    TextView listText;
     String[] indiaState;
 
     public AllIndiaStateAdapter(FragmentCall fragmentCall, String[] indiaState) {
@@ -29,16 +22,17 @@ public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdap
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.alli_india_list_expandable, parent, false));
+        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.all_india_states_list_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        listText.setText(indiaState[position]);
-        parentList.setOnClickListener(new View.OnClickListener() {
+        final String currentState = indiaState[position];
+        holder.stateName.setText(currentState);
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentCall.indiaFragmentCall(position, indiaState[position]);
+                fragmentCall.indiaFragmentCall(position, currentState);
             }
         });
     }
@@ -49,11 +43,13 @@ public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdap
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
+        public LinearLayout linearLayout;
+        public TextView stateName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            parentList = itemView.findViewById(R.id.parentListExp);
-            listText = itemView.findViewById(R.id.listText);
+            linearLayout = itemView.findViewById(R.id.state_list_linear_layout);
+            this.stateName = itemView.findViewById(R.id.state_name);
         }
     }
 }

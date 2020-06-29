@@ -1,6 +1,5 @@
 package com.mahafuz.covid19tracker.ApiInterface;
 
-import com.mahafuz.covid19tracker.Model.AgeRangeModel;
 import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.GenderModel;
 import com.mahafuz.covid19tracker.Model.InfectedProbabilityModel;
