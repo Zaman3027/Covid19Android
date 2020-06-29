@@ -4,14 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.R;
 
@@ -50,6 +45,7 @@ public class AllIndiaStateAdapter extends RecyclerView.Adapter<AllIndiaStateAdap
     class MyViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout linearLayout;
         public TextView stateName;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.state_list_linear_layout);
