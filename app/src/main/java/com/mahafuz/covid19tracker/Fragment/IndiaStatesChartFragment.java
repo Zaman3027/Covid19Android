@@ -116,6 +116,7 @@ public class IndiaStatesChartFragment extends Fragment {
             ));
 
         }
+        
         confirmedTextView.setText("Confirmed: " + seriesData.get(size-1).getValue("value").toString());
         recoveredTextView.setText("Recovered: " + seriesData.get(size-1).getValue("value2").toString());
         deceasedTextView.setText("Deceased: " + seriesData.get(size-1).getValue("value3").toString());
