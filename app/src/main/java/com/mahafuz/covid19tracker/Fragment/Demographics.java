@@ -84,7 +84,6 @@ public class Demographics extends Fragment {
                     entryList.add(new ValueDataEntry("Female", response.body().getFemale()));
                     pieChart.data(entryList);
                     genderPieChart.setChart(pieChart);
-
                 }
             }
 
@@ -94,33 +93,33 @@ public class Demographics extends Fragment {
             }
         });
 
-//        retroFitInstance.getApi().getAgeRangeModelListCall().enqueue(new Callback<List<AgeRangeModel>>() {
-//            @Override
-//            public void onResponse(Call<List<AgeRangeModel>> call, Response<List<AgeRangeModel>> response) {
-//                if (response.isSuccessful()) {
-//                    APIlib.getInstance().setActiveAnyChartView(ageRange);
-//                    Cartesian cartesian = AnyChart.column();
-//                    cartesian.title("Age Range Sample");
-//                    cartesian.animation(true);
-//                    List<DataEntry> entryList = new ArrayList<>();
-//                    for (AgeRangeModel ageRangeModel : response.body()) {
-//                        entryList.add(new ValueDataEntry(ageRangeModel.getRange(), ageRangeModel.getValue()));
-//                    }
-//
-//                    cartesian.column(entryList).color("#00c853");
-//                    cartesian.xAxis(0).title("Age");
-//                    cartesian.yAxis(0).title("Infected");
-//                    ageRange.setChart(cartesian);
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<AgeRangeModel>> call, Throwable t) {
-//
-//            }
-//        });
+        retroFitInstance.getApi().getAgeRangeModelListCall().enqueue(new Callback<List<AgeRangeModel>>() {
+            @Override
+            public void onResponse(Call<List<AgeRangeModel>> call, Response<List<AgeRangeModel>> response) {
+                if (response.isSuccessful()) {
+                    APIlib.getInstance().setActiveAnyChartView(ageRange);
+                    Cartesian cartesian = AnyChart.column();
+                    cartesian.title("Age Range Sample");
+                    cartesian.animation(true);
+                    List<DataEntry> entryList = new ArrayList<>();
+                    for (AgeRangeModel ageRangeModel : response.body()) {
+                        entryList.add(new ValueDataEntry(ageRangeModel.getRange(), ageRangeModel.getValue()));
+                    }
+
+                    cartesian.column(entryList).color("#00c853");
+                    cartesian.xAxis(0).title("Age");
+                    cartesian.yAxis(0).title("Infected");
+                    ageRange.setChart(cartesian);
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AgeRangeModel>> call, Throwable t) {
+
+            }
+        });
 
         retroFitInstance.getApi().getTotalCaseModel().enqueue(new Callback<List<TotalCaseModel>>() {
             @Override

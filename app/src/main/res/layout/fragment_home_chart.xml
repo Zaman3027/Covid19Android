@@ -5,11 +5,12 @@
     android:layout_height="300dp"
     tools:context=".Fragment.HomeChartFragment">
 
-    <com.anychart.AnyChartView
-        android:id="@+id/any_chart_view"
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/mp_chart_view"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/homeCardActive" />
+        android:layout_height="300dp">
+    </com.github.mikephil.charting.charts.LineChart>
 
 
 </FrameLayout>

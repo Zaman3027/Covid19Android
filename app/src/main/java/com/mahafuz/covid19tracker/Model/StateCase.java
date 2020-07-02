@@ -8,15 +8,19 @@ public class StateCase {
     @SerializedName("Active")
     @Expose
     private String active;
+
     @SerializedName("Confirmed")
     @Expose
     private String confirmed;
+
     @SerializedName("Deaths")
     @Expose
     private String deaths;
+
     @SerializedName("Recovered")
     @Expose
     private String recovered;
+
     @SerializedName("date")
     @Expose
     private String date;

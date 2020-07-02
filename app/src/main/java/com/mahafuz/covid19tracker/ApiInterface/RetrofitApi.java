@@ -1,5 +1,6 @@
 package com.mahafuz.covid19tracker.ApiInterface;
 
+import com.mahafuz.covid19tracker.Model.AgeRangeModel;
 import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.GenderModel;
 import com.mahafuz.covid19tracker.Model.InfectedProbabilityModel;
@@ -26,8 +27,8 @@ public interface RetrofitApi {
     @GET("/gender_ratio")
     Call<GenderModel> getGenderModelCall();
 
-//    @GET("/getAgeSample")
-//    Call<List<AgeRangeModel>> getAgeRangeModelListCall();
+    @GET("/getAgeSample")
+    Call<List<AgeRangeModel>> getAgeRangeModelListCall();
 
     @GET("/gettotalcase")
     Call<List<TotalCaseModel>> getTotalCaseModel();

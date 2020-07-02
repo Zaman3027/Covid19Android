@@ -46,7 +46,7 @@
                         android:layout_marginBottom="5dp"
                         android:textAlignment="center"
                         android:text="Confirm"
-                        android:textColor="#2B59A2"
+                        android:textColor="@color/active_dark"
                         android:fontFamily="@font/montserrat"
                         android:textSize="16sp" />
 
@@ -67,7 +67,7 @@
                         android:layout_marginTop="5dp"
                         tools:text="555"
                         android:textAlignment="center"
-                        android:textColor="#2B59A2"
+                        android:textColor="@color/active_dark"
                         android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro"/>
                 </LinearLayout>
@@ -97,7 +97,7 @@
                         android:layout_marginBottom="5dp"
                         android:textAlignment="center"
                         android:text="Cured"
-                        android:textColor="#015b25"
+                        android:textColor="@color/recovered_dark"
                         android:fontFamily="@font/montserrat"
                         android:textSize="16sp" />
 
@@ -118,7 +118,7 @@
                         android:layout_marginTop="5dp"
                         tools:text="555"
                         android:textAlignment="center"
-                        android:textColor="#015b25"
+                        android:textColor="@color/recovered_dark"
                         android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro" />
                 </LinearLayout>
@@ -148,7 +148,7 @@
                         android:layout_marginBottom="5dp"
                         android:textAlignment="center"
                         android:text="Deceased"
-                        android:textColor="#5a0502"
+                        android:textColor="@color/deceased_dark"
                         android:fontFamily="@font/montserrat"
                         android:textSize="16sp" />
 
@@ -169,7 +169,7 @@
                         android:layout_marginTop="5dp"
                         tools:text="555"
                         android:textAlignment="center"
-                        android:textColor="#5a0502"
+                        android:textColor="@color/deceased_dark"
                         android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro" />
                 </LinearLayout>
@@ -177,57 +177,11 @@
         </LinearLayout>
 
         <FrameLayout
-            android:id="@+id/any_chart_view_fragment"
+            android:id="@+id/mp_chart_view_fragment"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_below="@+id/homeCardActive"
-            android:layout_marginTop="16dp" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioAll"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/radio_flat_selector"
-                android:button="@android:color/transparent"
-                android:checked="true"
-                android:gravity="center"
-                android:text="All"
-                android:textColor="@drawable/radio_flat_text_selector"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/radio_1_month"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/radio_flat_selector"
-                android:button="@android:color/transparent"
-                android:gravity="center"
-                android:text="30 Days"
-                android:textColor="@drawable/radio_flat_text_selector"
-                android:textSize="16sp" />
-
-            <RadioButton
-                android:id="@+id/radio_2_months"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/radio_flat_selector"
-                android:button="@android:color/transparent"
-                android:gravity="center"
-                android:text="60 Days"
-                android:textAlignment="center"
-                android:textColor="@drawable/radio_flat_text_selector"
-                android:textSize="16sp" />
-
-        </RadioGroup>
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardAllIndia"

@@ -22,7 +22,6 @@ import com.anychart.APIlib;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
-import com.mahafuz.covid19tracker.BaseAct;
 import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.TotalCaseModel;
@@ -44,14 +43,12 @@ public class HomeFragment extends Fragment {
 
     CardView homeCardActive, homeCardRecovered, homeDeadActive;
     int screenWidth;
-    AnyChartView anyChartView;
     TextView cardActive, cardRecovered, cardDeceased;
     CardView cardIndiaStates, cardDemographic,infected_probability,model_prediction;
     FragmentCall fragmentCall;
     ProgressDialog progressDialog;
     AndroidModule androidModule;
     RetroFitInstance retroFitInstance;
-    RadioButton radio_1_month, radio_2_months, radioAll;
     List<DailyCaseModel> dailyCaseModel;
 
     @Override
@@ -71,13 +68,9 @@ public class HomeFragment extends Fragment {
         homeCardActive = getView().findViewById(R.id.homeCardActive);
         homeCardRecovered = getView().findViewById(R.id.homeCardRecovered);
         homeDeadActive = getView().findViewById(R.id.homeDeadActive);
-        anyChartView = getView().findViewById(R.id.any_chart_view);
         cardActive = getView().findViewById(R.id.cardActive);
         cardRecovered = getView().findViewById(R.id.cardRecovered);
         cardDeceased = getView().findViewById(R.id.cardDeceased);
-        radio_1_month = getView().findViewById(R.id.radio_1_month);
-        radio_2_months = getView().findViewById(R.id.radio_2_months);
-        radioAll = getView().findViewById(R.id.radioAll);
         cardIndiaStates = getView().findViewById(R.id.cardAllIndia);
         cardDemographic = getView().findViewById(R.id.cardDemographic);
         infected_probability = getView().findViewById(R.id.infected_probability);
@@ -85,7 +78,44 @@ public class HomeFragment extends Fragment {
         retroFitInstance = new RetroFitInstance();
         androidModule = AndroidModule.getInstance(getContext());
         androidModule.showLoadingDialogue();
-        APIlib.getInstance().setActiveAnyChartView(anyChartView);
+
+        // Show confirmed, cured, deceased cards
+        retroFitInstance.getApi().getTotalCaseModel().enqueue(new Callback<List<TotalCaseModel>>() {
+            @Override
+            public void onResponse(Call<List<TotalCaseModel>> call, Response<List<TotalCaseModel>> response) {
+                if (response.isSuccessful()) {
+                    cardDeceased.setText(response.body().get(response.body().size() - 1).getDeceased());
+                    cardRecovered.setText(response.body().get(response.body().size() - 1).getRecovered());
+                    cardActive.setText(response.body().get(response.body().size() - 1).getConfirmed());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TotalCaseModel>> call, Throwable t) {
+
+            }
+        });
+
+        //  To plot daily cases chart
+        retroFitInstance.getApi().getCaseModelCall().enqueue(new Callback<List<DailyCaseModel>>() {
+            @Override
+            public void onResponse(Call<List<DailyCaseModel>> call, Response<List<DailyCaseModel>> response) {
+                androidModule.dismissDialogue();
+                if (response.isSuccessful()) {
+                    dailyCaseModel = response.body();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.mp_chart_view_fragment,
+                                    new HomeChartFragment(dailyCaseModel))
+                            .commit();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DailyCaseModel>> call, Throwable t) {
+
+            }
+        });
+
 
         cardIndiaStates.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,63 +137,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        retroFitInstance.getApi().getCaseModelCall().enqueue(new Callback<List<DailyCaseModel>>() {
-            @Override
-            public void onResponse(Call<List<DailyCaseModel>> call, Response<List<DailyCaseModel>> response) {
-                androidModule.dismissDialogue();
-                if (response.isSuccessful()) {
-                    dailyCaseModel = response.body();
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.any_chart_view_fragment,
-                                    new HomeChartFragment(dailyCaseModel))
-                            .commit();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<DailyCaseModel>> call, Throwable t) {
-
-            }
-        });
-        retroFitInstance.getApi().getTotalCaseModel().enqueue(new Callback<List<TotalCaseModel>>() {
-            @Override
-            public void onResponse(Call<List<TotalCaseModel>> call, Response<List<TotalCaseModel>> response) {
-                if (response.isSuccessful()) {
-                    cardDeceased.setText(response.body().get(response.body().size() - 1).getDeceased());
-                    cardRecovered.setText(response.body().get(response.body().size() - 1).getRecovered());
-                    cardActive.setText(response.body().get(response.body().size() - 1).getConfirmed());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<TotalCaseModel>> call, Throwable t) {
-
-            }
-        });
-
-        radio_1_month.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                thirtyDayPloat();
-            }
-        });
-
-        radio_2_months.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sixtyDayPloat();
-            }
-        });
-
-        radioAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.any_chart_view_fragment,
-                                new HomeChartFragment(dailyCaseModel))
-                        .commit();
-            }
-        });
 
         infected_probability.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,34 +152,34 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-    private void thirtyDayPloat() {
-        if (dailyCaseModel != null) {
-            if (dailyCaseModel.size() > 30) {
-                Log.i("HOMEFRAGMENT", "dksjdks123");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.any_chart_view_fragment,
-                                new HomeChartFragment(dailyCaseModel.subList(dailyCaseModel.size() - 31, dailyCaseModel.size() - 1)))
-                        .commit();
-            }
-        } else {
-            Log.i("HOMEFRAGMENT", "dksjdks");
-        }
-    }
-
-    private void sixtyDayPloat() {
-        if (dailyCaseModel != null) {
-            if (dailyCaseModel.size() > 60) {
-                Log.i("HOMEFRAGMENT", "dksjdks123");
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.any_chart_view_fragment,
-                                new HomeChartFragment(dailyCaseModel.subList(dailyCaseModel.size() - 61, dailyCaseModel.size() - 1)))
-                        .commit();
-            }
-        } else {
-            Log.i("HOMEFRAGMENT", "dksjdks");
-        }
-    }
+//
+//    private void thirtyDayPlot() {
+//        if (dailyCaseModel != null) {
+//            if (dailyCaseModel.size() > 30) {
+//                Log.i("HOMEFRAGMENT", "dksjdks123");
+//                getFragmentManager().beginTransaction()
+//                        .replace(R.id.mp_chart_view_fragment,
+//                                new HomeChartFragment(dailyCaseModel.subList(dailyCaseModel.size() - 31, dailyCaseModel.size() - 1)))
+//                        .commit();
+//            }
+//        } else {
+//            Log.i("HOMEFRAGMENT", "dksjdks");
+//        }
+//    }
+//
+//    private void sixtyDayPlot() {
+//        if (dailyCaseModel != null) {
+//            if (dailyCaseModel.size() > 60) {
+//                Log.i("HOMEFRAGMENT", "dksjdks123");
+//                getFragmentManager().beginTransaction()
+//                        .replace(R.id.mp_chart_view_fragment,
+//                                new HomeChartFragment(dailyCaseModel.subList(dailyCaseModel.size() - 61, dailyCaseModel.size() - 1)))
+//                        .commit();
+//            }
+//        } else {
+//            Log.i("HOMEFRAGMENT", "dksjdks");
+//        }
+//    }
 
 
     static class CustomDataEntry extends ValueDataEntry {
