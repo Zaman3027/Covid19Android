@@ -231,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="10dp"
-                        android:text="No. of red and yellow zones"
+                        android:text="No. of red and orange zones"
                         android:fontFamily="@font/montserrat">
                     </TextView>
                     <TextView
