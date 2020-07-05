@@ -98,11 +98,11 @@ public class InfectedProbFragment extends Fragment implements AdapterView.OnItem
             @Override
             public void onResponse(Call<InfectedProbabilityModel> call, Response<InfectedProbabilityModel> response) {
                 if (response.isSuccessful()){
-                    String probabiliy[] = new String[2];
-                    probabiliy[0] = response.body().getProb().get0();
-                    probabiliy[1] = response.body().getProb().get1();
-                    mProbabilityTextView0.setText(probabiliy[0]);
-                    mProbabilityTextView1.setText(probabiliy[1]);
+                    String[] probability = new String[2];
+                    probability[0] = response.body().getProb().get0();
+                    probability[1] = response.body().getProb().get1();
+                    mProbabilityTextView0.setText(probability[0]);
+                    mProbabilityTextView1.setText(probability[1]);
                 }
             }
 

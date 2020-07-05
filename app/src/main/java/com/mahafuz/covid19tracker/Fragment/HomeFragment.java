@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment {
     int screenWidth;
     TextView cardActive, cardRecovered, cardDeceased;
     CardView cardIndiaStates, cardDemographic,infected_probability,model_prediction;
-    FragmentCall fragmentCall;
     ProgressDialog progressDialog;
     AndroidModule androidModule;
     RetroFitInstance retroFitInstance;
@@ -56,7 +55,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         dailyCaseModel = new ArrayList<>();
         screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

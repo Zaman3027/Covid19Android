@@ -1,7 +1,6 @@
 package com.mahafuz.covid19tracker;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;
@@ -11,7 +10,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 
 public class CustomMarkerView extends MarkerView {
 
-    private TextView contentTextView;
+    private TextView casesTextView;
     private MPPointF mOffset;
 
     /**
@@ -22,17 +21,14 @@ public class CustomMarkerView extends MarkerView {
      */
     public CustomMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
-        contentTextView = (TextView) findViewById(R.id.chart_marker);
+        casesTextView = (TextView) findViewById(R.id.chart_marker);
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        contentTextView.setText("" + Math.round(e.getY()));
-        Log.i("Custom Marker", "" + e.getY() + "---------------------------");
-        Log.i("Custom Marker", "" + e.getX() + "-------------------------");
-        Log.i("Custom Marker", "" + e.getData() + "-------------------");
+        casesTextView.setText("" + Math.round(e.getY()));
         super.refreshContent(e, highlight);
     }
 
@@ -40,7 +36,7 @@ public class CustomMarkerView extends MarkerView {
     public MPPointF getOffset() {
         if(mOffset == null) {
             // center the marker horizontally and vertically
-            mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
+            mOffset = new MPPointF(-(getWidth()), -getHeight());
         }
         return mOffset;
     }

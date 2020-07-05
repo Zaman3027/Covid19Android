@@ -1,13 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.PredictionActivity">
-    <com.anychart.AnyChartView
-        android:id="@+id/predictionView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Fragment.PredictionActivity">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="Total Cases Line Chart"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"></TextView>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/prediction_chart"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+        </com.github.mikephil.charting.charts.LineChart>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp">
+            <TableRow android:background="#e0e0e0">
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="Days"
+                    android:textColor="@color/secondaryLightColor"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Predicted Lower Limit"
+                    android:textColor="@color/secondaryLightColor"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Predicted Upper Limit"
+                    android:textColor="@color/secondaryLightColor"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/day1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Day 1"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day1_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="01"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day1_ul"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="01"
+                    android:textColor="@color/secondaryLightColor"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+            </TableRow>
+            <TableRow android:background="#e0e0e0">
+                <TextView
+                    android:id="@+id/day2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Day 2"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day2_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="02"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day2_ul"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="02"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/day3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Day 3"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day3_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="03"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day3_ul"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="03"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+            </TableRow>
+            <TableRow android:background="#e0e0e0">
+                <TextView
+                    android:id="@+id/day4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Day 4"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day4_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:text="04"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day4_ul"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="04"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/day5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Day 5"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day5_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:text="05"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+                <TextView
+                    android:id="@+id/day5_ul"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="04"
+                    android:gravity="center"
+                    android:fontFamily="@font/montserrat">
+                </TextView>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</ScrollView>

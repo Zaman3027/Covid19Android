@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/state_name"
@@ -18,7 +19,7 @@
         android:layout_marginRight="16dp"
         android:textSize="15sp"
         android:textColor="@color/cardview_dark_background"
-        android:fontFamily="@font/montserrat"/>
+        android:fontFamily="@font/montserrat" />
 
     <ImageView
         android:layout_width="50dp"

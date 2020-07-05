@@ -55,22 +55,19 @@ public class HomeChartFragment extends Fragment {
         if (this.dailyCaseModelList!=null) {
             plotMPChart(this.dailyCaseModelList);
         }
-
-
     }
 
     private void plotMPChart(List<DailyCaseModel> dailyCaseModelList) {
         List<DailyCaseModel> dailyCaseSubList = dailyCaseModelList.subList(dailyCaseModelList.size() - 30, dailyCaseModelList.size());
-
         List<Entry> entriesConfirmed = new ArrayList<>();
         List<Entry> entriesRecovered = new ArrayList<>();
         List<Entry> entriesDeceased = new ArrayList<>();
-        final String[] labels = new String[dailyCaseSubList.size()+1];
+        final String[] labels = new String[dailyCaseSubList.size()];
         for (int i=0; i<dailyCaseSubList.size(); i++){
-            entriesConfirmed.add(new Entry(Integer.parseInt(dailyCaseSubList.get(i).getDate().substring(8,10)), Integer.parseInt(dailyCaseSubList.get(i).getConfirmed())));
-            entriesRecovered.add(new Entry(Integer.parseInt(dailyCaseSubList.get(i).getDate().substring(8,10)), Integer.parseInt(dailyCaseSubList.get(i).getRecovered())));
-            entriesDeceased.add(new Entry(Integer.parseInt(dailyCaseSubList.get(i).getDate().substring(8,10)), Integer.parseInt(dailyCaseSubList.get(i).getDeceased())));
-            labels[i+1] = dailyCaseSubList.get(i).getDate().substring(8,10) + "/" + dailyCaseSubList.get(i).getDate().substring(5,7);
+            entriesConfirmed.add(new Entry(i, Integer.parseInt(dailyCaseSubList.get(i).getConfirmed())));
+            entriesRecovered.add(new Entry(i, Integer.parseInt(dailyCaseSubList.get(i).getRecovered())));
+            entriesDeceased.add(new Entry(i, Integer.parseInt(dailyCaseSubList.get(i).getDeceased())));
+            labels[i] = dailyCaseSubList.get(i).getDate().substring(8,10) + "/" + dailyCaseSubList.get(i).getDate().substring(5,7);
         }
 
         ValueFormatter valueFormatter = new ValueFormatter() {
@@ -107,7 +104,6 @@ public class HomeChartFragment extends Fragment {
         lineData.addDataSet(recoveredDataSet);
         lineData.addDataSet(deceasedDataSet);
         mLineChart.setData(lineData);
-
         XAxis xAxis = mLineChart.getXAxis();
         xAxis.setValueFormatter(valueFormatter);
         xAxis.setDrawGridLines(false);
@@ -120,6 +116,7 @@ public class HomeChartFragment extends Fragment {
         mLineChart.setTouchEnabled(true);
         IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
         mLineChart.setMarkerView(mv);
+        mLineChart.animateXY(3000,3000);
     }
 
 }

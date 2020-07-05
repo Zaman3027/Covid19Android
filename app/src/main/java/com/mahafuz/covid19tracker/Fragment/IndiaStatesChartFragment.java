@@ -1,17 +1,17 @@
 package com.mahafuz.covid19tracker.Fragment;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -27,9 +27,12 @@ import com.mahafuz.covid19tracker.Model.Score;
 import com.mahafuz.covid19tracker.Model.StateCase;
 import com.mahafuz.covid19tracker.Model.StateChoiceModel;
 import com.mahafuz.covid19tracker.Model.StateTest;
+import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +46,8 @@ public class IndiaStatesChartFragment extends Fragment {
     TextView positivityScore, mortalityScore, confirmScore, totalScore, zoneScore, cumulativeScore;
     LineChart mStateTotalLineChart, mStateTestLineChart;
     RetroFitInstance retroFitInstance;
+    ProgressDialog progressDialog;
+    AndroidModule androidModule;
 
     public IndiaStatesChartFragment(String stateName) {
         this.stateName = stateName;
@@ -51,7 +56,6 @@ public class IndiaStatesChartFragment extends Fragment {
     public IndiaStatesChartFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,15 +81,21 @@ public class IndiaStatesChartFragment extends Fragment {
         totalScore = getView().findViewById(R.id.score_totol_cases);
         zoneScore = getView().findViewById(R.id.score_zones);
         cumulativeScore = getView().findViewById(R.id.score_cumulative);
+        progressDialog = new ProgressDialog(getContext());
+        androidModule = AndroidModule.getInstance(getContext());
+        androidModule.showLoadingDialogue();
 
         stateNameTextView.setText(capitalize(stateName));
         retroFitInstance.getApi().getStateChoiceList(stateName).enqueue(new Callback<StateChoiceModel>() {
             @Override
             public void onResponse(Call<StateChoiceModel> call, Response<StateChoiceModel> response) {
-                cardData(response.body());
-                plotStateTotalLineChart(response.body());
-                plotStateTestLineChart(response.body());
-                fillTable(response.body());
+                androidModule.dismissDialogue();
+                if (response.isSuccessful()){
+                    cardData(response.body());
+                    plotStateTotalLineChart(response.body());
+                    plotStateTestLineChart(response.body());
+                    fillTable(response.body());
+                }
             }
 
             @Override
@@ -106,19 +116,15 @@ public class IndiaStatesChartFragment extends Fragment {
 
         List<StateCase> stateDailyCaseList = stateChoiceModelList.getStateCase();
         List<StateCase> stateDailyCaseSubList = stateDailyCaseList.subList(stateDailyCaseList.size() - 30, stateDailyCaseList.size());
-        for (int j=0; j<stateDailyCaseSubList.size(); j++){
-            Log.i("IndiaStates", stateDailyCaseSubList.get(j).getDate() + stateDailyCaseSubList.get(j).getConfirmed() + stateDailyCaseSubList.get(j).getRecovered() + stateDailyCaseSubList.get(j).getDeaths()+"-------------");
-        }
-
         List<Entry> entriesConfirmed = new ArrayList<>();
         List<Entry> entriesRecovered = new ArrayList<>();
         List<Entry> entriesDeceased = new ArrayList<>();
-        final String[] labels = new String[stateDailyCaseSubList.size()+1];
+        final String[] labels = new String[stateDailyCaseSubList.size()];
         for (int i=0; i<stateDailyCaseSubList.size(); i++){
-            entriesConfirmed.add(new Entry(Integer.parseInt(stateDailyCaseSubList.get(i).getDate().substring(8,10)), Integer.parseInt(stateDailyCaseSubList.get(i).getConfirmed())));
-            entriesRecovered.add(new Entry(Integer.parseInt(stateDailyCaseSubList.get(i).getDate().substring(8,10)), Integer.parseInt(stateDailyCaseSubList.get(i).getRecovered())));
-            entriesDeceased.add(new Entry(Integer.parseInt(stateDailyCaseSubList.get(i).getDate().substring(8,10)), Integer.parseInt(stateDailyCaseSubList.get(i).getDeaths())));
-            labels[i+1] = stateDailyCaseSubList.get(i).getDate().substring(8,10) + "/" + stateDailyCaseSubList.get(i).getDate().substring(5,7);
+            entriesConfirmed.add(new Entry(i, Integer.parseInt(stateDailyCaseSubList.get(i).getConfirmed())));
+            entriesRecovered.add(new Entry(i, Integer.parseInt(stateDailyCaseSubList.get(i).getRecovered())));
+            entriesDeceased.add(new Entry(i, Integer.parseInt(stateDailyCaseSubList.get(i).getDeaths())));
+            labels[i] = stateDailyCaseSubList.get(i).getDate().substring(8,10) + "/" + stateDailyCaseSubList.get(i).getDate().substring(5,7);
         }
 
         ValueFormatter valueFormatter = new ValueFormatter() {
@@ -167,22 +173,18 @@ public class IndiaStatesChartFragment extends Fragment {
         mStateTotalLineChart.setTouchEnabled(true);
         IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
         mStateTotalLineChart.setMarker(mv);
+        mStateTotalLineChart.animateXY(3000, 3000);
     }
 
 
     private void plotStateTestLineChart(StateChoiceModel stateChoiceModelList) {
-        List<StateTest> stateDailyCaseList = stateChoiceModelList.getStateTest();
-        List<StateTest> stateDailyCaseSubList = stateDailyCaseList.subList(stateDailyCaseList.size() - 31, stateDailyCaseList.size()-1);
-
-        for (int i=0; i< stateDailyCaseSubList.size(); i++){
-            Log.i("IndiaState", stateDailyCaseSubList.get(i).getDate() + "--" + stateDailyCaseSubList.get(i).getValue() + "-----------------------------------");
-        }
+        List<StateTest> stateTotalTestsList = stateChoiceModelList.getStateTest();
+        List<StateTest> stateDailyCaseSubList = stateTotalTestsList.subList(stateTotalTestsList.size() - 31, stateTotalTestsList.size()-1);
         List<Entry> entriesTested = new ArrayList<>();
-        final String[] labels = new String[stateDailyCaseSubList.size()+1];
+        final String[] labels = new String[stateDailyCaseSubList.size()];
         for (int i=0; i<stateDailyCaseSubList.size(); i++){
-            entriesTested.add(new Entry(Integer.parseInt(stateDailyCaseSubList.get(i).getDate().substring(8,10)), Math.round(Float.parseFloat(stateDailyCaseSubList.get(i).getValue()))));
-            labels[i+1] = stateDailyCaseSubList.get(i).getDate().substring(8,10) + "/" + stateDailyCaseSubList.get(i).getDate().substring(5,7);
-            Log.i("Label", "plotStateTestLineChart:------------- " + labels[i+1]);
+            entriesTested.add(new Entry(i, Math.round(Float.parseFloat(stateDailyCaseSubList.get(i).getValue()))));
+            labels[i] = stateDailyCaseSubList.get(i).getDate().substring(8,10) + "/" + stateDailyCaseSubList.get(i).getDate().substring(5,7);
         }
 
         ValueFormatter valueFormatter = new ValueFormatter() {
@@ -199,12 +201,9 @@ public class IndiaStatesChartFragment extends Fragment {
         testDataSet.setCircleRadius(2);
         testDataSet.setDrawValues(false);
 
-
         LineData lineData = new LineData();
         lineData.addDataSet(testDataSet);
-
         mStateTestLineChart.setData(lineData);
-
         XAxis xAxis = mStateTestLineChart.getXAxis();
         xAxis.setValueFormatter(valueFormatter);
         xAxis.setDrawGridLines(false);
@@ -215,9 +214,9 @@ public class IndiaStatesChartFragment extends Fragment {
         mStateTestLineChart.getDescription().setTextSize(10);
         mStateTestLineChart.invalidate();
         mStateTestLineChart.setTouchEnabled(true);
-
         IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
         mStateTestLineChart.setMarkerView(mv);
+        mStateTestLineChart.animateXY(3000, 3000);
     }
 
     private void fillTable(StateChoiceModel stateChoiceModelScore) {
@@ -239,5 +238,11 @@ public class IndiaStatesChartFragment extends Fragment {
             capitalizeWord += first.toUpperCase()+afterFirst+" ";
         }
         return capitalizeWord.trim();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        androidModule.dispose();
     }
 }

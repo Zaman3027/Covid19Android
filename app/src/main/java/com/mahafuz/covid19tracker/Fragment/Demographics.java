@@ -1,5 +1,6 @@
 package com.mahafuz.covid19tracker.Fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
@@ -33,6 +35,7 @@ import com.mahafuz.covid19tracker.Model.GenderModel;
 import com.mahafuz.covid19tracker.Model.StateTestingModel;
 import com.mahafuz.covid19tracker.Model.TestingModel;
 import com.mahafuz.covid19tracker.Model.TotalCaseModel;
+import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
 
 import java.util.ArrayList;
@@ -48,6 +51,8 @@ import retrofit2.Response;
 public class Demographics extends Fragment {
     RetroFitInstance retroFitInstance;
     AnyChartView genderPieChart, ageRange, totalCaseChart, testingChart, stateTestingChart;
+    ProgressDialog progressDialog;
+    AndroidModule androidModule;
 
     public Demographics() {
         // Required empty public constructor
@@ -64,16 +69,19 @@ public class Demographics extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        progressDialog = new ProgressDialog(getContext());
         genderPieChart = getView().findViewById(R.id.genderPieChart);
         ageRange = getView().findViewById(R.id.ageRange);
         totalCaseChart = getView().findViewById(R.id.totalCaseChart);
         testingChart = getView().findViewById(R.id.testingChart);
         stateTestingChart = getView().findViewById(R.id.stateTestingChart);
+        androidModule = AndroidModule.getInstance(getContext());
+        androidModule.showLoadingDialogue();
 
         retroFitInstance.getApi().getGenderModelCall().enqueue(new Callback<GenderModel>() {
             @Override
             public void onResponse(Call<GenderModel> call, Response<GenderModel> response) {
+                androidModule.dismissDialogue();
                 if (response.isSuccessful()) {
                     APIlib.getInstance().setActiveAnyChartView(genderPieChart);
                     Pie pieChart = AnyChart.pie();
@@ -265,5 +273,9 @@ public class Demographics extends Fragment {
         totalCaseChart.setChart(cartesian);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        androidModule.dispose();
+    }
 }
