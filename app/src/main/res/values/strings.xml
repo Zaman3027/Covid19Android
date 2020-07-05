@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">Covid19tracker</string>
+    <string name="app_name">Covid-19</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gender_prompt">Your Gender?</string>
+    <string name="state_prompt">Your state?</string>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <string-array name="india_states">
         <item>Andaman and Nicobar Islands</item>
         <item>Andhra Pradesh</item>

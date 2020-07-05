@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Fragment.InfectedProbFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Probability of getting infected"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/cardview_dark_background"
+            android:textStyle="bold"
+            android:gravity="center"
+            ></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Your Age?"
+                android:layout_marginStart="5dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/montserrat"></TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Your Gender?"
+                android:textSize="12sp"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/montserrat"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <EditText
+                android:id="@+id/input_age"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:paddingLeft="10dp"
+                android:inputType="numberDecimal"
+                android:textColor="@color/cardview_dark_background"
+                android:background="@drawable/card_border_confirm"></EditText>
+
+            <Spinner
+                android:id="@+id/gender_spinner"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:entries="@array/gender"
+                android:prompt="@string/gender_prompt"
+                android:background="@drawable/card_border_confirm"></Spinner>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your State?"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/montserrat"></TextView>
+        <Spinner
+            android:id="@+id/state_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:entries="@array/india_states"
+            android:prompt="@string/state_prompt"
+            android:background="@drawable/card_border_confirm"></Spinner>
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Submit"
+            android:textColor="@color/confirm_dark"
+            android:background="@drawable/card_border_active"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            ></Button>
+    </LinearLayout>
+</ScrollView>

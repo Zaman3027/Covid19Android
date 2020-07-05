@@ -1,5 +1,3 @@
-
-
 package com.mahafuz.covid19tracker.Model;
 
 import java.util.List;
@@ -14,6 +12,9 @@ public class InfectedProbabilityModel {
     @SerializedName("genderRatio")
     @Expose
     private GenderRatio genderRatio;
+    @SerializedName("prob")
+    @Expose
+    private Prob prob;
 
     public List<AgeRangeModel> getAgeRange() {
         return ageRange;
@@ -31,4 +32,11 @@ public class InfectedProbabilityModel {
         this.genderRatio = genderRatio;
     }
 
+    public Prob getProb() {
+        return prob;
+    }
+
+    public void setProb(Prob prob) {
+        this.prob = prob;
+    }
 }

@@ -141,7 +141,10 @@ public class HomeFragment extends Fragment {
         infected_probability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.navigation_drawer_frame, new InfectedProbFragment(), "Infected Probability")
+                        .addToBackStack("Infected Probability")
+                        .commit();
             }
         });
 
@@ -152,35 +155,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-//
-//    private void thirtyDayPlot() {
-//        if (dailyCaseModel != null) {
-//            if (dailyCaseModel.size() > 30) {
-//                Log.i("HOMEFRAGMENT", "dksjdks123");
-//                getFragmentManager().beginTransaction()
-//                        .replace(R.id.mp_chart_view_fragment,
-//                                new HomeChartFragment(dailyCaseModel.subList(dailyCaseModel.size() - 31, dailyCaseModel.size() - 1)))
-//                        .commit();
-//            }
-//        } else {
-//            Log.i("HOMEFRAGMENT", "dksjdks");
-//        }
-//    }
-//
-//    private void sixtyDayPlot() {
-//        if (dailyCaseModel != null) {
-//            if (dailyCaseModel.size() > 60) {
-//                Log.i("HOMEFRAGMENT", "dksjdks123");
-//                getFragmentManager().beginTransaction()
-//                        .replace(R.id.mp_chart_view_fragment,
-//                                new HomeChartFragment(dailyCaseModel.subList(dailyCaseModel.size() - 61, dailyCaseModel.size() - 1)))
-//                        .commit();
-//            }
-//        } else {
-//            Log.i("HOMEFRAGMENT", "dksjdks");
-//        }
-//    }
-
 
     static class CustomDataEntry extends ValueDataEntry {
 

@@ -26,19 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center">
-            <TextView
-                android:id="@+id/state_tested"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                tools:text="Tested: 12345"
-                android:textSize="13sp"
-                android:fontFamily="@font/montserrat"
-                android:textColor="@color/cardview_dark_background"
-                android:padding="5dp"
-                android:textAlignment="center"
-                android:layout_margin="3dp"
-                android:background="@drawable/home_fragment_card_border"></TextView>
+
             <TextView
                 android:id="@+id/state_confirmed"
                 android:layout_width="0dp"
@@ -47,11 +35,25 @@
                 tools:text="Confirmed: 12345"
                 android:textSize="13sp"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/confirm_light"
                 android:padding="5dp"
                 android:textAlignment="center"
                 android:layout_margin="3dp"
-                android:background="@drawable/home_fragment_card_border"></TextView>
+                android:background="@drawable/card_border_confirm"></TextView>
+            <TextView
+                android:id="@+id/state_active"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                tools:text="Active: 12345"
+                android:textSize="13sp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/active_light"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:layout_margin="3dp"
+                android:background="@drawable/card_border_active"></TextView>
+
         </LinearLayout>
 
         <LinearLayout
@@ -67,11 +69,11 @@
                 tools:text="Recovered: 12345"
                 android:fontFamily="@font/montserrat"
                 android:textSize="13sp"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/recovered_light"
                 android:padding="5dp"
                 android:textAlignment="center"
                 android:layout_margin="3dp"
-                android:background="@drawable/home_fragment_card_border"></TextView>
+                android:background="@drawable/card_border_recovered"></TextView>
             <TextView
                 android:id="@+id/state_deceased"
                 android:layout_width="0dp"
@@ -79,12 +81,12 @@
                 android:layout_height="wrap_content"
                 tools:text="Deceased: 12345"
                 android:fontFamily="@font/montserrat"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/deceased_light"
                 android:textSize="13sp"
                 android:padding="5dp"
                 android:textAlignment="center"
                 android:layout_margin="3dp"
-                android:background="@drawable/home_fragment_card_border"></TextView>
+                android:background="@drawable/card_border_deceased"></TextView>
         </LinearLayout>
 
     </LinearLayout>
@@ -106,8 +108,148 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/line_chart_state_test"
                 android:layout_width="match_parent"
-                android:layout_height="500dp">
-            </com.github.mikephil.charting.charts.LineChart>
+                android:layout_height="500dp"></com.github.mikephil.charting.charts.LineChart>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+                <TableRow android:background="#e0e0e0">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Parameters"
+                        android:textColor="@color/secondaryLightColor"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Score"
+                        android:textColor="@color/secondaryLightColor"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Test positivity rate"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/score_positivity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        tools:text="01"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                </TableRow>
+                <TableRow android:background="#e0e0e0">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Mortality rate"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/score_mortality"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        tools:text="02"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirmed cases per million"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/score_confirm_cases"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        tools:text="03"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                </TableRow>
+                <TableRow android:background="#e0e0e0">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:text="Total cases per million"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/score_totol_cases"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        tools:text="04"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="No of red and yellow zones"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/score_zones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        tools:text="05"
+                        android:fontFamily="@font/montserrat">
+                    </TextView>
+                </TableRow>
+                <TableRow android:background="#e0e0e0">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="Cumulative Score"
+                        android:fontFamily="@font/montserrat"
+                        android:textColor="@color/secondaryLightColor">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/score_cumulative"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        tools:text="25/50"
+                        android:fontFamily="@font/montserrat"
+                        android:textColor="@color/secondaryLightColor">
+                    </TextView>
+                </TableRow>
+            </TableLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -46,7 +46,7 @@
                         android:layout_marginBottom="5dp"
                         android:textAlignment="center"
                         android:text="Confirm"
-                        android:textColor="@color/active_dark"
+                        android:textColor="@color/confirm_dark"
                         android:fontFamily="@font/montserrat"
                         android:textSize="16sp" />
 
@@ -67,7 +67,7 @@
                         android:layout_marginTop="5dp"
                         tools:text="555"
                         android:textAlignment="center"
-                        android:textColor="@color/active_dark"
+                        android:textColor="@color/confirm_dark"
                         android:textSize="20sp"
                         android:fontFamily="@font/anonymous_pro"/>
                 </LinearLayout>
@@ -189,13 +189,15 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="4dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@drawable/home_fragment_card_border">
+                android:background="@drawable/card_border_home">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -227,13 +229,15 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@drawable/home_fragment_card_border">
+                android:background="@drawable/card_border_home">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -265,13 +269,15 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@drawable/home_fragment_card_border">
+                android:background="@drawable/card_border_home">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -302,19 +308,21 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@drawable/home_fragment_card_border">
+                android:background="@drawable/card_border_home">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Probability of getting Infected"
+                    android:text="PROBABILITY"
                     android:textAlignment="textStart"
                     android:layout_marginLeft="16dp"
                     android:textSize="18sp"
@@ -340,13 +348,15 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@drawable/home_fragment_card_border">
+                android:background="@drawable/card_border_home">
 
                 <TextView
                     android:layout_width="wrap_content"

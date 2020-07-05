@@ -82,9 +82,9 @@ public class HomeChartFragment extends Fragment {
 
 
         LineDataSet confirmDataSet = new LineDataSet(entriesConfirmed, "Confirmed");
-        confirmDataSet.setColor(getResources().getColor(R.color.active_light));
-        confirmDataSet.setCircleColor(getResources().getColor(R.color.active_dark));
-        confirmDataSet.setCircleHoleColor(getResources().getColor(R.color.active_dark));
+        confirmDataSet.setColor(getResources().getColor(R.color.confirm_light));
+        confirmDataSet.setCircleColor(getResources().getColor(R.color.confirm_dark));
+        confirmDataSet.setCircleHoleColor(getResources().getColor(R.color.confirm_dark));
         confirmDataSet.setCircleRadius(2);
         confirmDataSet.setDrawValues(false);
 
@@ -118,7 +118,7 @@ public class HomeChartFragment extends Fragment {
         mLineChart.getDescription().setTextSize(9);
         mLineChart.invalidate();
         mLineChart.setTouchEnabled(true);
-        IMarker mv = new CustomMarkerView(getContext(), R.layout.content_view);
+        IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
         mLineChart.setMarkerView(mv);
     }
 

@@ -8,12 +8,14 @@
     <color name="secondaryDarkColor">#007c91</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
-    <color name="active_light">#a5c9fd</color>
-    <color name="active_dark">#2B59A2</color>
+    <color name="confirm_light">#a5c9fd</color>
+    <color name="confirm_dark">#2B59A2</color>
     <color name="recovered_light">#9ae69c</color>
     <color name="recovered_dark">#015b25</color>
     <color name="deceased_light">#ff8582</color>
     <color name="deceased_dark">#5a0502</color>
     <color name="tested_light">#fff176</color>
     <color name="tested_dark">#ffd600</color>
+    <color name="active_light">#ffa726</color>
+    <color name="active_dark">#fb8c00</color>
 </resources>
