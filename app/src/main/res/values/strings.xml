@@ -13,7 +13,7 @@
         5 parameters and gives a cumulative score highlighting the present scenario in the state.
     </string>
 
-    <string name="total_case_table_description">Noe: The table gives the minimum and maximum possible
+    <string name="total_case_table_description">Note: The table gives the minimum and maximum possible
         total number of cases for next five days including today.
     </string>
 
