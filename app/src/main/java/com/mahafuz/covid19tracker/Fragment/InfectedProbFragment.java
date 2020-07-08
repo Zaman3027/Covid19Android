@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
 import com.mahafuz.covid19tracker.Model.InfectedProbabilityModel;
+import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
 
 import org.w3c.dom.Text;
@@ -43,7 +44,7 @@ public class InfectedProbFragment extends Fragment implements AdapterView.OnItem
     TextView mProbabilityTextView0;
     TextView mProbabilityTextView1;
     Spinner genderSpinner, stateSpinner;
-
+    AndroidModule androidModule;
     public InfectedProbFragment() {
         // Required empty public constructor
     }
@@ -64,6 +65,7 @@ public class InfectedProbFragment extends Fragment implements AdapterView.OnItem
         stateSpinner = getView().findViewById(R.id.state_spinner);
         mSubmitButton = (Button) getView().findViewById(R.id.submit_button);
         infoDialog = new Dialog(getContext());
+        androidModule = AndroidModule.getInstance(getContext());
 
         genderSpinner.setOnItemSelectedListener(this);
         genderSpinner.setPrompt("Your Gender?");
@@ -78,10 +80,11 @@ public class InfectedProbFragment extends Fragment implements AdapterView.OnItem
                 String user_state = stateSpinner.getSelectedItem().toString();
                 mAgeEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-                if (!user_age.matches(""))
+                if (!user_age.matches("")){
+                    androidModule.showLoadingDialogue();
                     showDialog(user_age, user_gender, user_state);
-                else if (user_age.matches("") )
-                    Toast.makeText(getContext(), "Age field can't be empty!", Toast.LENGTH_SHORT).show();
+                } else if (user_age.matches("") )
+                    Toast.makeText(getContext(), "May I know your age?", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -97,6 +100,7 @@ public class InfectedProbFragment extends Fragment implements AdapterView.OnItem
         .enqueue(new Callback<InfectedProbabilityModel>() {
             @Override
             public void onResponse(Call<InfectedProbabilityModel> call, Response<InfectedProbabilityModel> response) {
+                androidModule.dismissDialogue();
                 if (response.isSuccessful()){
                     String[] probability = new String[2];
                     probability[0] = response.body().getProb().get0();
@@ -131,5 +135,11 @@ public class InfectedProbFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        androidModule.dispose();
     }
 }

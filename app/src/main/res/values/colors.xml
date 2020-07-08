@@ -18,4 +18,6 @@
     <color name="tested_dark">#ffd600</color>
     <color name="active_light">#ffa726</color>
     <color name="active_dark">#fb8c00</color>
+    <color name="graph_green">#76ff03</color>
+    <color name="graph_blue">#00e5ff</color>
 </resources>

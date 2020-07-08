@@ -85,7 +85,7 @@ public class HomeChartFragment extends Fragment {
         confirmDataSet.setCircleRadius(2);
         confirmDataSet.setDrawValues(false);
 
-        LineDataSet recoveredDataSet = new LineDataSet(entriesRecovered, "Cured");
+        LineDataSet recoveredDataSet = new LineDataSet(entriesRecovered, "Recovered");
         recoveredDataSet.setColor(getResources().getColor(R.color.recovered_light));
         recoveredDataSet.setCircleColor(getResources().getColor(R.color.recovered_dark));
         recoveredDataSet.setCircleHoleColor(getResources().getColor(R.color.recovered_dark));
@@ -118,5 +118,4 @@ public class HomeChartFragment extends Fragment {
         mLineChart.setMarkerView(mv);
         mLineChart.animateXY(3000,3000);
     }
-
 }

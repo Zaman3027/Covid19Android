@@ -1,40 +1,42 @@
 package com.mahafuz.covid19tracker.Fragment;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.anychart.APIlib;
 import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
 import com.anychart.core.cartesian.series.Column;
-import com.anychart.core.cartesian.series.Line;
-import com.anychart.data.Mapping;
-import com.anychart.data.Set;
-import com.anychart.enums.Anchor;
-import com.anychart.enums.MarkerType;
-import com.anychart.enums.TooltipPositionMode;
-import com.anychart.graphics.vector.Stroke;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.IMarker;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
+import com.mahafuz.covid19tracker.CustomMarkerView;
 import com.mahafuz.covid19tracker.Model.AgeRangeModel;
-import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.GenderModel;
 import com.mahafuz.covid19tracker.Model.StateTestingModel;
 import com.mahafuz.covid19tracker.Model.TestingModel;
-import com.mahafuz.covid19tracker.Model.TotalCaseModel;
 import com.mahafuz.covid19tracker.Module.AndroidModule;
 import com.mahafuz.covid19tracker.R;
 
@@ -50,9 +52,10 @@ import retrofit2.Response;
  */
 public class Demographics extends Fragment {
     RetroFitInstance retroFitInstance;
-    AnyChartView genderPieChart, ageRange, totalCaseChart, testingChart, stateTestingChart;
     ProgressDialog progressDialog;
     AndroidModule androidModule;
+    PieChart mGenderPieChart;
+    BarChart mAgeRangeBarChart, mTestBarChart, mStateTestBarChart;
 
     public Demographics() {
         // Required empty public constructor
@@ -70,11 +73,10 @@ public class Demographics extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         progressDialog = new ProgressDialog(getContext());
-        genderPieChart = getView().findViewById(R.id.genderPieChart);
-        ageRange = getView().findViewById(R.id.ageRange);
-        totalCaseChart = getView().findViewById(R.id.totalCaseChart);
-        testingChart = getView().findViewById(R.id.testingChart);
-        stateTestingChart = getView().findViewById(R.id.stateTestingChart);
+        mGenderPieChart = getView().findViewById(R.id.gender_pie_chart);
+        mAgeRangeBarChart = getView().findViewById(R.id.age_range_bar_chart);
+        mTestBarChart = getView().findViewById(R.id.test_bar_chart);
+        mStateTestBarChart = getView().findViewById(R.id.state_test_bar_chart);
         androidModule = AndroidModule.getInstance(getContext());
         androidModule.showLoadingDialogue();
 
@@ -83,15 +85,28 @@ public class Demographics extends Fragment {
             public void onResponse(Call<GenderModel> call, Response<GenderModel> response) {
                 androidModule.dismissDialogue();
                 if (response.isSuccessful()) {
-                    APIlib.getInstance().setActiveAnyChartView(genderPieChart);
-                    Pie pieChart = AnyChart.pie();
-                    pieChart.title("Gender Ratio");
-                    pieChart.animation(true);
-                    List<DataEntry> entryList = new ArrayList<>();
-                    entryList.add(new ValueDataEntry("Male", response.body().getMale()));
-                    entryList.add(new ValueDataEntry("Female", response.body().getFemale()));
-                    pieChart.data(entryList);
-                    genderPieChart.setChart(pieChart);
+                    ArrayList<PieEntry> genderRatio = new ArrayList<>();
+                    genderRatio.add(new PieEntry(response.body().getMale(), "Male"));
+                    genderRatio.add(new PieEntry(response.body().getFemale(), "Female"));
+
+                    final int[] MY_COLORS = {Color.rgb(0, 229, 255), Color.rgb(118, 255, 3)};
+
+                    PieDataSet dataSet = new PieDataSet( genderRatio, "Gender Ratio");
+                    dataSet.setColors(ColorTemplate.createColors(MY_COLORS));
+
+                    PieData data = new PieData(dataSet);
+                    mGenderPieChart.setData(data);
+                    mGenderPieChart.setUsePercentValues(true);
+                    mGenderPieChart.setExtraOffsets(5, 10, 5, 5);
+                    mGenderPieChart.setDrawHoleEnabled(true);
+                    mGenderPieChart.setHoleRadius(30f);
+                    mGenderPieChart.setTransparentCircleRadius(10f);
+                    mGenderPieChart.getDescription().setText("Figures are shown in percentage");
+                    mGenderPieChart.getDescription().setTextSize(9f);
+                    mGenderPieChart.invalidate();
+                    mGenderPieChart.animateXY(3000, 3000);
+                    IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
+                    mGenderPieChart.setMarker(mv);
                 }
             }
 
@@ -105,21 +120,42 @@ public class Demographics extends Fragment {
             @Override
             public void onResponse(Call<List<AgeRangeModel>> call, Response<List<AgeRangeModel>> response) {
                 if (response.isSuccessful()) {
-                    APIlib.getInstance().setActiveAnyChartView(ageRange);
-                    Cartesian cartesian = AnyChart.column();
-                    cartesian.title("Age Range Sample");
-                    cartesian.animation(true);
-                    List<DataEntry> entryList = new ArrayList<>();
-                    for (AgeRangeModel ageRangeModel : response.body()) {
-                        entryList.add(new ValueDataEntry(ageRangeModel.getRange(), ageRangeModel.getValue()));
+                    List<AgeRangeModel> ageRangeList = response.body();
+                    ArrayList<BarEntry> entries = new ArrayList<>();
+                    String[] labels = new String[ageRangeList.size()];
+                    for (int i=0; i<ageRangeList.size(); i++){
+                        entries.add(new BarEntry(i, ageRangeList.get(i).getValue()));
+                        labels[i] = ageRangeList.get(i).getRange();
                     }
 
-                    cartesian.column(entryList).color("#00c853");
-                    cartesian.xAxis(0).title("Age");
-                    cartesian.yAxis(0).title("Infected");
-                    ageRange.setChart(cartesian);
+                    ValueFormatter vf = new ValueFormatter() {
+                        @Override
+                        public String getAxisLabel(float value, AxisBase axis) {
+                            return labels[(int) value];
+                        }
+                    };
 
+                    BarDataSet dataSet = new BarDataSet(entries, "Age Range");
+                    dataSet.setColor(getResources().getColor(R.color.graph_blue));
+                    dataSet.setDrawValues(false);
 
+                    BarData data = new BarData();
+                    data.addDataSet(dataSet);
+                    mAgeRangeBarChart.setData(data);
+
+                    XAxis xAxis = mAgeRangeBarChart.getXAxis();
+                    xAxis.setValueFormatter(vf);
+                    xAxis.setDrawGridLines(false);
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    mAgeRangeBarChart.setGridBackgroundColor(Color.GRAY);
+                    mAgeRangeBarChart.getAxisRight().setEnabled(false);
+                    mAgeRangeBarChart.getDescription().setText("Zoom In/Out or Tap on dots | X-axis:Age range | Y-axis:Cases count");
+                    mAgeRangeBarChart.getDescription().setTextSize(9);
+                    mAgeRangeBarChart.invalidate();
+                    mAgeRangeBarChart.setTouchEnabled(true);
+                    mAgeRangeBarChart.animateXY(3000, 3000);
+                    IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
+                    mAgeRangeBarChart.setMarker(mv);
                 }
             }
 
@@ -129,38 +165,46 @@ public class Demographics extends Fragment {
             }
         });
 
-        retroFitInstance.getApi().getTotalCaseModel().enqueue(new Callback<List<TotalCaseModel>>() {
-            @Override
-            public void onResponse(Call<List<TotalCaseModel>> call, Response<List<TotalCaseModel>> response) {
-                if (response.isSuccessful()) {
-                    APIlib.getInstance().setActiveAnyChartView(totalCaseChart);
-                    plotChart(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<TotalCaseModel>> call, Throwable t) {
-
-            }
-        });
-
         retroFitInstance.getApi().getTestingModelList().enqueue(new Callback<List<TestingModel>>() {
             @Override
             public void onResponse(Call<List<TestingModel>> call, Response<List<TestingModel>> response) {
                 if (response.isSuccessful()) {
-                    APIlib.getInstance().setActiveAnyChartView(testingChart);
-                    Cartesian chart = AnyChart.column();
-                    chart.fullScreen(true);
-                    chart.animation(true);
-                    chart.title("Analysis of Testing over Time ");
-                    List<DataEntry> entryList = new ArrayList<>();
-                    for (TestingModel testingModel : response.body()) {
-                        entryList.add(new ValueDataEntry(testingModel.getDate(),
-                                Float.parseFloat(testingModel.getTestspermillion())));
+                    List<TestingModel> testingModelList = response.body();
+                    List<BarEntry> entries = new ArrayList<>();
+                    String[] labels = new String[testingModelList.size()];
+                    for (int i=0; i< testingModelList.size(); i++){
+                        entries.add(new BarEntry(i, Math.round(Float.parseFloat(testingModelList.get(i).getTestspermillion()))));
+                        labels[i] = testingModelList.get(i).getDate();
                     }
-                    chart.column(entryList).color("#dd2c00");
-                    testingChart.setChart(chart);
 
+                    ValueFormatter vf = new ValueFormatter() {
+                        @Override
+                        public String getAxisLabel(float value, AxisBase axis) {
+                            return labels[(int) value];
+                        }
+                    };
+
+                    BarDataSet testDataSet = new BarDataSet(entries, "Total Tests in India");
+                    testDataSet.setColor(getResources().getColor(R.color.graph_green));
+                    testDataSet.setDrawValues(false);
+
+                    BarData testData = new BarData();
+                    testData.addDataSet(testDataSet);
+                    mTestBarChart.setData(testData);
+
+                    XAxis xAxis = mTestBarChart.getXAxis();
+                    xAxis.setValueFormatter(vf);
+                    xAxis.setDrawGridLines(false);
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    mTestBarChart.setGridBackgroundColor(Color.GRAY);
+                    mTestBarChart.getAxisRight().setEnabled(false);
+                    mTestBarChart.getDescription().setText("Zoom In/Out or Tap on dots | X-axis:YYYY-MM-DD | Y-axis:Tests count");
+                    mTestBarChart.getDescription().setTextSize(9);
+                    mTestBarChart.invalidate();
+                    mTestBarChart.setTouchEnabled(true);
+                    mTestBarChart.animateXY(3000, 3000);
+                    IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
+                    mTestBarChart.setMarker(mv);
                 }
             }
 
@@ -174,18 +218,42 @@ public class Demographics extends Fragment {
             @Override
             public void onResponse(Call<List<StateTestingModel>> call, Response<List<StateTestingModel>> response) {
                 if (response.isSuccessful()) {
-                    APIlib.getInstance().setActiveAnyChartView(stateTestingChart);
-                    Cartesian chart = AnyChart.column();
-                    chart.fullScreen(true);
-                    chart.animation(true);
-                    chart.title("Analysis of Testing over Time ");
-                    List<DataEntry> entryList = new ArrayList<>();
-                    for (StateTestingModel testingModel : response.body()) {
-                        entryList.add(new ValueDataEntry(testingModel.getState(), Float.parseFloat(testingModel.getValue())));
+                    List<StateTestingModel> stateTestingModelList = response.body();
+                    List<BarEntry> entries = new ArrayList<>();
+                    String[] labels = new String[stateTestingModelList.size()];
+                    for (int i=0; i<stateTestingModelList.size(); i++){
+                        entries.add(new BarEntry(i, Math.round(Float.parseFloat(stateTestingModelList.get(i).getValue()))));
+                        labels[i] = stateTestingModelList.get(i).getState();
                     }
-                    Column column = chart.column(entryList);
-                    column.color("#e65100");
-                    stateTestingChart.setChart(chart);
+
+                    ValueFormatter vf = new ValueFormatter() {
+                        @Override
+                        public String getAxisLabel(float value, AxisBase axis) {
+                            return labels[(int) value];
+                        }
+                    };
+
+                    BarDataSet stateTestDataSet = new BarDataSet(entries, "State wise Total Tests");
+                    stateTestDataSet.setColor(getResources().getColor(R.color.graph_blue));
+                    stateTestDataSet.setDrawValues(false);
+
+                    BarData stateTestData = new BarData();
+                    stateTestData.addDataSet(stateTestDataSet);
+                    mStateTestBarChart.setData(stateTestData);
+
+                    XAxis xAxis = mStateTestBarChart.getXAxis();
+                    xAxis.setValueFormatter(vf);
+                    xAxis.setDrawGridLines(false);
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    mStateTestBarChart.setGridBackgroundColor(Color.GRAY);
+                    mStateTestBarChart.getAxisRight().setEnabled(false);
+                    mStateTestBarChart.getDescription().setText("Zoom In/Out or Tap on dots | X-axis:State | Y-axis:Tests count");
+                    mStateTestBarChart.getDescription().setTextSize(9);
+                    mStateTestBarChart.invalidate();
+                    mStateTestBarChart.setTouchEnabled(true);
+                    IMarker mv = new CustomMarkerView(getContext(), R.layout.chart_marker);
+                    mStateTestBarChart.setMarker(mv);
+                    mStateTestBarChart.animateXY(3000, 3000);
                 }
             }
 
@@ -195,82 +263,6 @@ public class Demographics extends Fragment {
             }
         });
 
-    }
-
-    private void plotChart(List<TotalCaseModel> dailyCaseModel) {
-        Log.i("HOMEFRAGMENT", "" + dailyCaseModel.size());
-        Cartesian cartesian = AnyChart.line();
-        cartesian.animation(true);
-        cartesian.crosshair().enabled(true);
-        cartesian.crosshair()
-                .yLabel(true)
-                .yStroke((Stroke) null, null, null, (String) null, (String) null);
-        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-
-        cartesian.title("Daily Cases");
-
-        cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
-
-
-        List<DataEntry> seriesData = new ArrayList<>();
-        for (int i = 0; i < dailyCaseModel.size(); i++) {
-            Log.i("HOMEFRAGMENT", dailyCaseModel.get(i).getDate());
-            seriesData.add(new HomeFragment.CustomDataEntry(
-                    dailyCaseModel.get(i).getDate(),
-                    Integer.parseInt(dailyCaseModel.get(i).getConfirmed()),
-                    Integer.parseInt(dailyCaseModel.get(i).getRecovered()),
-                    Integer.parseInt(dailyCaseModel.get(i).getDeceased())
-            ));
-
-        }
-
-
-        Set set = Set.instantiate();
-        set.data(seriesData);
-        Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
-        Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
-        Mapping series3Mapping = set.mapAs("{ x: 'x', value: 'value3' }");
-
-        Line series1 = cartesian.line(series1Mapping);
-        series1.name("Confirmed");
-        series1.hovered().markers().enabled(true);
-        series1.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series1.tooltip()
-                .position("right")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
-
-        Line series2 = cartesian.line(series2Mapping);
-        series2.name("Recovered");
-        series2.hovered().markers().enabled(true);
-        series2.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series2.tooltip()
-                .position("right")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
-
-        Line series3 = cartesian.line(series3Mapping);
-        series3.name("Deceased");
-        series3.hovered().markers().enabled(true);
-        series3.hovered().markers()
-                .type(MarkerType.CIRCLE)
-                .size(4d);
-        series3.tooltip()
-                .position("right")
-                .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
-
-        cartesian.legend().enabled(true);
-        cartesian.legend().fontSize(13d);
-        cartesian.legend().padding(0d, 0d, 10d, 0d);
-        totalCaseChart.setChart(cartesian);
     }
 
     @Override

@@ -141,7 +141,7 @@ public class IndiaStatesChartFragment extends Fragment {
         confirmDataSet.setCircleRadius(2);
         confirmDataSet.setDrawValues(false);
 
-        LineDataSet recoveredDataSet = new LineDataSet(entriesRecovered, "Cured");
+        LineDataSet recoveredDataSet = new LineDataSet(entriesRecovered, "Recovered");
         recoveredDataSet.setColor(getResources().getColor(R.color.recovered_light));
         recoveredDataSet.setCircleColor(getResources().getColor(R.color.recovered_dark));
         recoveredDataSet.setCircleHoleColor(getResources().getColor(R.color.recovered_dark));
@@ -230,7 +230,7 @@ public class IndiaStatesChartFragment extends Fragment {
     }
 
     private String capitalize(String str) {
-        String words[]=str.split("\\s");
+        String[] words=str.split("\\s");
         String capitalizeWord="";
         for(String w:words){
             String first = w.substring(0,1);

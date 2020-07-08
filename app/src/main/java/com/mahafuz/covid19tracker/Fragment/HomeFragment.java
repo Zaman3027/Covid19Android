@@ -11,18 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.anychart.APIlib;
-import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.mahafuz.covid19tracker.ApiInterface.RetroFitInstance;
-import com.mahafuz.covid19tracker.Interface.FragmentCall;
 import com.mahafuz.covid19tracker.Model.DailyCaseModel;
 import com.mahafuz.covid19tracker.Model.TotalCaseModel;
 import com.mahafuz.covid19tracker.Module.AndroidModule;
@@ -44,7 +39,7 @@ public class HomeFragment extends Fragment {
     CardView homeCardActive, homeCardRecovered, homeDeadActive;
     int screenWidth;
     TextView cardActive, cardRecovered, cardDeceased;
-    CardView cardIndiaStates, cardDemographic,infected_probability,model_prediction;
+    CardView cardIndiaStates, cardDemographic, cardInfectedProbability, cardModelPrediction, cardAboutUs;
     ProgressDialog progressDialog;
     AndroidModule androidModule;
     RetroFitInstance retroFitInstance;
@@ -69,10 +64,11 @@ public class HomeFragment extends Fragment {
         cardActive = getView().findViewById(R.id.cardActive);
         cardRecovered = getView().findViewById(R.id.cardRecovered);
         cardDeceased = getView().findViewById(R.id.cardDeceased);
-        cardIndiaStates = getView().findViewById(R.id.cardAllIndia);
-        cardDemographic = getView().findViewById(R.id.cardDemographic);
-        infected_probability = getView().findViewById(R.id.infected_probability);
-        model_prediction = getView().findViewById(R.id.model_prediction);
+        cardIndiaStates = getView().findViewById(R.id.card_all_india);
+        cardDemographic = getView().findViewById(R.id.card_demographic);
+        cardInfectedProbability = getView().findViewById(R.id.card_infected_probability);
+        cardModelPrediction = getView().findViewById(R.id.card_model_prediction);
+        cardAboutUs = getView().findViewById(R.id.card_about_us);
         retroFitInstance = new RetroFitInstance();
         androidModule = AndroidModule.getInstance(getContext());
         androidModule.showLoadingDialogue();
@@ -102,8 +98,7 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     dailyCaseModel = response.body();
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.mp_chart_view_fragment,
-                                    new HomeChartFragment(dailyCaseModel))
+                            .replace(R.id.mp_chart_view_fragment, new HomeChartFragment(dailyCaseModel))
                             .commit();
                 }
             }
@@ -113,7 +108,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
 
         cardIndiaStates.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +129,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        infected_probability.setOnClickListener(new View.OnClickListener() {
+        cardInfectedProbability.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction()
@@ -146,10 +139,20 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        model_prediction.setOnClickListener(new View.OnClickListener() {
+        cardModelPrediction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), PredictionActivity.class));
+            }
+        });
+
+        cardAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.navigation_drawer_frame, new AboutUs(), "About Us")
+                        .addToBackStack("About Us")
+                        .commit();
             }
         });
     }

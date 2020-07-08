@@ -46,6 +46,7 @@ public class PredictionActivity extends AppCompatActivity {
         actionBar.setElevation(0);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.custom_toolbar, null));
+
         mPredictionChart = findViewById(R.id.prediction_chart);
         day1 = (TextView) findViewById(R.id.day1);
         day2 = (TextView) findViewById(R.id.day2);

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="70dp">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/team_icon"
+                android:layout_gravity="center"></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:textSize="12sp"
+                android:text="@string/description"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"></TextView>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TableRow>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/team"
+                        android:fontFamily="@font/montserrat"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_marginStart="10dp"></TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rohan"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="15sp"
+                        android:layout_marginStart="20dp"></TextView>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mahafuz"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="15sp"
+                        android:layout_marginStart="20dp"></TextView>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/prince"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="15sp"
+                        android:layout_marginStart="20dp"></TextView>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/manas"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="15sp"
+                        android:layout_marginStart="20dp"></TextView>
+                </TableRow>
+
+                <TableRow>
+                    <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mayank"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="15sp"
+                        android:layout_marginStart="20dp"></TextView>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Made with"
+                android:layout_marginEnd="5dp"
+                android:textSize="12sp"></TextView>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/heart_icon"
+                android:layout_gravity="center"></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="for you!"
+                android:layout_marginStart="5dp"
+                android:textSize="12sp"></TextView>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -2,12 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Fragment.InfectedProbFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
 
@@ -19,10 +18,9 @@
             android:layout_marginRight="20dp"
             android:textSize="20sp"
             android:fontFamily="@font/montserrat"
-            android:textColor="@color/cardview_dark_background"
+            android:textColor="@color/secondaryLightColor"
             android:textStyle="bold"
-            android:gravity="center"
-            ></TextView>
+            android:gravity="center"></TextView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +61,7 @@
                 android:layout_marginRight="10dp"
                 android:paddingLeft="10dp"
                 android:inputType="numberDecimal"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/secondaryLightColor"
                 android:background="@drawable/card_border_confirm"></EditText>
 
             <Spinner
@@ -79,7 +77,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your State?"
+            android:text="Your Destination State?"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="10dp"
@@ -103,6 +101,8 @@
             android:background="@drawable/card_border_active"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            ></Button>
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"></Button>
     </LinearLayout>
 </ScrollView>

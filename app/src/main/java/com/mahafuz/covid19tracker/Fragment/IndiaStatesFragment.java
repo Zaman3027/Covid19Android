@@ -24,7 +24,7 @@ import com.mahafuz.covid19tracker.R;
  * A simple {@link Fragment} subclass.
  */
 public class IndiaStatesFragment extends Fragment implements FragmentCall {
-    boolean isDetailShowing = false;
+
     public IndiaStatesFragment() {
         // Required empty public constructor
     }

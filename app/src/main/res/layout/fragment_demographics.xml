@@ -9,44 +9,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:orientation="vertical"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.anychart.AnyChartView
-                android:id="@+id/genderPieChart"
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/gender_pie_chart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_alignParentTop="true" />
+                android:contentDescription="Gender Ratio"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"></com.github.mikephil.charting.charts.PieChart>
 
-            <com.anychart.AnyChartView
-                android:id="@+id/ageRange"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/age_range_bar_chart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_below="@id/genderPieChart" />
+                android:contentDescription="Age Range"
+                android:layout_marginBottom="20dp">
+            </com.github.mikephil.charting.charts.BarChart>
 
-            <com.anychart.AnyChartView
-                android:id="@+id/totalCaseChart"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/test_bar_chart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_below="@id/ageRange" />
+                android:contentDescription="Test chart"
+                android:layout_marginBottom="20dp">
+            </com.github.mikephil.charting.charts.BarChart>
 
-            <com.anychart.AnyChartView
-                android:id="@+id/testingChart"
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/state_test_bar_chart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_below="@id/totalCaseChart" />
+                android:layout_marginBottom="30dp"
+                android:contentDescription="State wise Tests cases"></com.github.mikephil.charting.charts.BarChart>
 
-            <com.anychart.AnyChartView
-                android:id="@+id/stateTestingChart"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_below="@id/testingChart" />
-
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
 </FrameLayout>

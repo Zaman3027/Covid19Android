@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,9 +9,8 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="20dp">
@@ -45,10 +45,10 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="5dp"
                         android:textAlignment="center"
-                        android:text="Confirm"
+                        android:text="Confirmed"
                         android:textColor="@color/confirm_dark"
                         android:fontFamily="@font/montserrat"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:src="@drawable/icon_infected"
@@ -96,10 +96,10 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="5dp"
                         android:textAlignment="center"
-                        android:text="Cured"
+                        android:text="Recovered"
                         android:textColor="@color/recovered_dark"
                         android:fontFamily="@font/montserrat"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:src="@drawable/icon_inactive"
@@ -150,7 +150,7 @@
                         android:text="Deceased"
                         android:textColor="@color/deceased_dark"
                         android:fontFamily="@font/montserrat"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:src="@drawable/icon_death"
@@ -184,21 +184,23 @@
             android:textSize="12sp"
             android:gravity="center"
             android:layout_marginTop="20dp"></TextView>
+
         <FrameLayout
             android:id="@+id/mp_chart_view_fragment"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardAllIndia"
+            android:id="@+id/card_all_india"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -231,14 +233,15 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/model_prediction"
+            android:id="@+id/card_model_prediction"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -250,7 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Model"
+                    android:text="PREDICTION MODEL"
                     android:textAllCaps="true"
                     android:textAlignment="textStart"
                     android:layout_marginLeft="16dp"
@@ -271,14 +274,15 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardDemographic"
+            android:id="@+id/card_demographic"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -290,7 +294,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="DEMOGRAHICS"
+                    android:text="DEMOGRAPHICS"
                     android:textAlignment="textStart"
                     android:layout_marginLeft="16dp"
                     android:textSize="18sp"
@@ -310,14 +314,15 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/infected_probability"
+            android:id="@+id/card_infected_probability"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -350,14 +355,15 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardAbout"
+            android:id="@+id/card_about_us"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             app:cardCornerRadius="2dp"
             app:cardElevation="0dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true">
+            android:clickable="true"
+            android:focusable="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"

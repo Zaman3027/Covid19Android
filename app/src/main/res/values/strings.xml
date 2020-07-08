@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Covid-19</string>
+    <string name="app_name">CoPredict</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="gender_prompt">Your Gender?</string>
     <string name="state_prompt">Your state?</string>
@@ -8,6 +8,14 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string name="state_table_description">Note: The table analyses and rates the state on the basis of above
+        5 parameters and gives a cumulative score highlighting the present scenario in the state.
+    </string>
+
+    <string name="total_case_table_description">Noe: The table gives the minimum and maximum possible
+        total number of cases for next five days including today.
+    </string>
 
     <string-array name="india_states">
         <item>Andaman and Nicobar Islands</item>
@@ -48,4 +56,21 @@
         <item>Uttar Pradesh</item>
         <item>West Bengal</item>
     </string-array>
+
+    <!--    Team Members-->
+    <string name="team">Team Members</string>
+    <string name="rohan">Rohan Jaiswal</string>
+    <string name="mahafuz">Sk Mahafuz Zaman</string>
+    <string name="prince">Prince Khatick</string>
+    <string name="manas">Manas Kumar Biswas</string>
+    <string name="mayank">Mayank Kedia</string>
+
+<!--    Description-->
+    <string name="description">In the wake of coronavirus outbreak, it’s quite difficult to assess
+        the odds of whether to travel to a particular state or not. To tackle
+        this problem, We, a team of 5 talented lads, armed with technologies, built an android application that will show
+        you the complete picture of the present situation in India and how well your destination state is
+        performing. It also gives you your probability of getting infected if you are travelling to another state.
+        The prediction model tries to predict the total number of cases in India for next five days including today.
+        With these informations, the app makes it easy for you to figure out how safe it is for you to travel to another state.</string>
 </resources>
